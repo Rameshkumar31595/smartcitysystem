@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Home - Smart City Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 text-center mb-4">
+        <h2 class="mb-3">Welcome, <span class="user-chip">{{ user.username }}</span>!</h2>
+        <p class="lead">Smart City Portal Dashboard</p>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">City Services</h5>
+                <p class="card-text">Browse available city services and information.</p>
+                <a href="{% url 'service_list' %}" class="btn btn-primary">View Services</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Report Issue</h5>
+                <p class="card-text">Report a civic issue in your area.</p>
+                <a href="{% url 'issue_create' %}" class="btn btn-primary">Report Issue</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">My Issues</h5>
+                <p class="card-text">Track your reported issues and their status.</p>
+                <a href="{% url 'issue_list' %}" class="btn btn-primary">View My Issues</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

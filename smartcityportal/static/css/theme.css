@@ -1,0 +1,790 @@
+/* =========================================
+   1. ROOT VARIABLES & GLOBAL RESET
+   ========================================= */
+:root {
+    /* Palette: Charcoal Dark Mode */
+    --bg-body-start: #1e1e24;
+    --bg-body-end: #121216;
+    --bg-card: #25262b;
+    --bg-input: #1a1b1e;
+    
+    /* Accents: Indigo/Blue */
+    --color-primary: #6366f1;
+    --color-primary-hover: #4f46e5;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    --color-info: #3b82f6;
+
+    /* Text Hierarchy - Enhanced for Readability */
+    --text-main: #f9fafb;        /* Near-white for primary text */
+    --text-secondary: #e5e7eb;   /* Slightly dimmed for secondary */
+    --text-muted: #d1d5db;       /* Bright muted (was too dark) */
+    --text-dimmed: #9ca3af;      /* Actual dim text */
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --focus-ring: rgba(99, 102, 241, 0.4);
+
+    /* Spacing & Radius */
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+}
+
+/* =========================================
+   2. GLOBAL TEXT OVERRIDES (Bootstrap Fix)
+   ========================================= */
+body {
+    background: linear-gradient(135deg, var(--bg-body-start), var(--bg-body-end));
+    color: var(--text-main) !important;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    min-height: 100vh;
+}
+
+/* Force readable text everywhere */
+body, body * {
+    color: var(--text-main);
+}
+
+/* Override Bootstrap's text-muted to be readable */
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Ensure all text inside structural elements is visible */
+h1, h2, h3, h4, h5, h6, 
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--text-main) !important;
+    font-weight: 600;
+}
+
+p, span, div, td, th, li {
+    color: inherit;
+}
+
+/* Small text needs better contrast */
+.small, small {
+    color: var(--text-muted) !important;
+}
+
+a {
+    color: var(--color-primary) !important;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #818cf8 !important;
+}
+
+/* Lead text visibility */
+.lead {
+    color: var(--text-secondary) !important;
+}
+
+/* =========================================
+   3. NAVBAR (Glassmorphism + Enhanced Brand)
+   ========================================= */
+.navbar {
+    background-color: rgba(30, 30, 36, 0.75) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* Enhanced Brand with Accent */
+.navbar-brand {
+    color: var(--text-main) !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.brand-accent {
+    position: relative;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px;
+    color: var(--text-main) !important;
+    text-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s ease;
+}
+
+.brand-accent::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-primary), rgba(99, 102, 241, 0));
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.brand-accent:hover {
+    color: #a5b4fc !important;
+    text-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
+}
+
+.brand-accent:hover::after {
+    opacity: 1;
+}
+
+/* Navigation Links */
+.nav-link {
+    color: var(--text-muted) !important;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--color-primary) !important;
+}
+
+/* Navbar Text Styling (Welcome message) */
+.navbar-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.5;
+    padding: 0.5rem 0;
+}
+
+/* Navbar Right Section Alignment */
+.navbar-nav.align-items-center {
+    gap: 0.5rem;
+}
+
+.navbar-nav.align-items-center .nav-item {
+    display: flex;
+    align-items: center;
+}
+
+/* =========================================
+   4. CARDS - Enhanced Readability
+   ========================================= */
+.card {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    margin-bottom: 1.5rem;
+}
+
+.card, .card * {
+    color: var(--text-main) !important;
+}
+
+.card-header {
+    background-color: transparent !important;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+    color: var(--text-main) !important;
+}
+
+.card-body {
+    padding: 1.5rem;
+    color: var(--text-main) !important;
+}
+
+.card-title {
+    color: var(--text-main) !important;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.card-text {
+    color: var(--text-secondary) !important;
+}
+
+/* KPI Cards - Enhanced Labels */
+.kpi .card-body {
+    padding: 1.5rem;
+}
+
+.kpi .text-muted {
+    color: var(--text-muted) !important;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.kpi .value {
+    color: var(--text-main) !important;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+/* =========================================
+   5. PAGE LAYOUT SYSTEM - Consistent Spacing
+   ========================================= */
+
+/* Main content spacing from navbar */
+main {
+    min-height: calc(100vh - 70px);
+}
+
+/* Page Header - Flex layout with title on left, actions on right */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.page-header-content {
+    flex: 1;
+    min-width: 0; /* Allows text truncation if needed */
+}
+
+.page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-main) !important;
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+}
+
+.page-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted) !important;
+    margin-bottom: 0;
+}
+
+/* Action buttons container */
+.page-header-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* Ensure header buttons have consistent spacing */
+.page-header-actions .btn {
+    margin: 0; /* rely on flex gap */
+}
+
+/* Dark Card variant for tables and admin panels */
+.card-dark {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+}
+
+/* Table wrapper inside dark cards for consistent padding */
+.table-dark-wrap {
+    padding: 0.5rem 0;
+}
+
+/* Responsive: Stack on mobile */
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .page-header-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .page-header-actions .btn {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   5. BUTTONS
+   ========================================= */
+.btn {
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    color: #ffffff !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+}
+
+.btn-secondary {
+    background-color: #374151 !important;
+    border-color: #374151 !important;
+    color: var(--text-main) !important;
+}
+
+.btn-secondary:hover {
+    background-color: #4b5563 !important;
+    border-color: #4b5563 !important;
+}
+
+.btn-outline-secondary {
+    color: var(--text-muted) !important;
+    border-color: var(--border-subtle) !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-main) !important;
+    border-color: var(--text-muted) !important;
+}
+
+/* =========================================
+   6. FORMS (Inputs & Controls)
+   ========================================= */
+.form-control, .form-select {
+    background-color: var(--bg-input) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--text-main) !important;
+    border-radius: var(--radius-md);
+    padding: 0.625rem 1rem;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-input) !important;
+    color: var(--text-main) !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 4px var(--focus-ring) !important;
+}
+
+.form-control::placeholder {
+    color: #6b7280 !important;
+    opacity: 1;
+}
+
+.form-label {
+    color: var(--text-muted) !important;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+/* =========================================
+   7. TABLES - Maximum Readability
+   ========================================= */
+.table {
+    color: var(--text-secondary) !important;
+    margin-bottom: 0;
+}
+
+.table > :not(caption) > * > * {
+    background-color: transparent !important;
+    border-bottom-color: var(--border-subtle) !important;
+    padding: 1rem;
+    color: var(--text-secondary) !important;
+}
+
+.table tbody tr td {
+    color: var(--text-secondary) !important;
+}
+
+.table-hover > tbody > tr:hover > * {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-main) !important;
+}
+
+.table th {
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: var(--text-main) !important;
+    background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Table links must be visible */
+.table a {
+    color: var(--color-primary) !important;
+    font-weight: 500;
+}
+
+.table a:hover {
+    color: #818cf8 !important;
+}
+
+/* =========================================
+   8. BADGES (Status Pills)
+   ========================================= */
+.badge {
+    padding: 0.5em 0.8em;
+    font-weight: 600;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+/* Bootstrap badge overrides */
+.badge-open, .status-open {
+    background-color: rgba(59, 130, 246, 0.2) !important;
+    color: #93c5fd !important;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.badge-progress, .status-in-progress {
+    background-color: rgba(245, 158, 11, 0.2) !important;
+    color: #fcd34d !important;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-resolved, .status-resolved {
+    background-color: rgba(16, 185, 129, 0.2) !important;
+    color: #6ee7b7 !important;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-rejected, .status-rejected {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+    color: #fca5a5 !important;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* =========================================
+   9. UTILITY OVERRIDES
+   ========================================= */
+.text-end {
+    color: inherit !important;
+}
+
+/* Section titles */
+.section-title {
+    color: var(--text-main) !important;
+    font-weight: 700;
+}
+
+/* Alert boxes */
+.alert {
+    border-radius: var(--radius-md);
+}
+
+.alert-danger {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    border-color: rgba(239, 68, 68, 0.3) !important;
+    color: #fca5a5 !important;
+}
+
+/* =========================================
+   10. USERNAME CHIP (User Highlight)
+   ========================================= */
+.user-chip {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.15));
+    color: #a5b4fc !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
+    transition: all 0.2s ease;
+}
+
+/* =========================================
+   11. LANDING PAGE SECTIONS
+   ========================================= */
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.03));
+    border-bottom: 1px solid var(--border-subtle);
+    padding-top: 6rem !important;
+    padding-bottom: 6rem !important;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--text-main), #a5b4fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem !important;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary) !important;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* Features Section */
+.features-section {
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+}
+
+.feature-card {
+    height: 100%;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-subtle);
+    background: linear-gradient(135deg, rgba(37, 38, 43, 0.8), rgba(26, 27, 30, 0.8));
+    backdrop-filter: blur(8px);
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.4);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: var(--color-primary);
+    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1);
+    color: #a5b4fc;
+    opacity: 1;
+}
+
+.feature-card .card-body {
+    text-align: center;
+}
+
+/* How It Works Section */
+.how-it-works-section {
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.03), transparent);
+}
+
+.how-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem !important;
+    color: var(--text-main) !important;
+}
+
+.how-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary) !important;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Step Cards - Professional Design */
+.step-card {
+    background: linear-gradient(135deg, rgba(37, 38, 43, 0.9), rgba(26, 27, 30, 0.9));
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 1.75rem;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Glow effect on hover - very subtle */
+.step-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.step-card:hover::before {
+    opacity: 1;
+}
+
+.step-card:hover {
+    transform: translateY(-12px);
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 20px 50px rgba(99, 102, 241, 0.25), inset 0 0 30px rgba(99, 102, 241, 0.08);
+}
+
+/* Step number badge */
+.step-number-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--color-primary), #4f46e5);
+    border-radius: 50%;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.step-card:hover .step-number-badge {
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+}
+
+/* Step icon */
+.step-icon {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: 1.25rem;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.step-card:hover .step-icon {
+    color: #a5b4fc;
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+/* Step title */
+.step-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-main) !important;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Step description */
+.step-description {
+    font-size: 0.95rem;
+    color: var(--text-secondary) !important;
+    line-height: 1.6;
+    position: relative;
+    z-index: 2;
+}
+
+/* ===== FADE-UP ANIMATION ===== */
+@keyframes fadeUpAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.animate-fade-up {
+    animation: fadeUpAnimation 0.7s ease-out forwards;
+}
+
+/* Stagger animation delays */
+.step-card:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.step-card:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.step-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.05));
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+}
+
+.cta-section h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem !important;
+}
+
+/* Footer Section */
+.footer-section {
+    background-color: rgba(26, 27, 30, 0.5);
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+}
+
+.footer-section p {
+    color: var(--text-dimmed) !important;
+    font-size: 0.95rem;
+}
+
+/* Button Variants */
+.btn-primary {
+    padding: 0.75rem 1.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+}
+
+.btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    padding: 0.75rem 1.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--color-primary) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+
+.btn-lg {
+    padding: 0.875rem 2.5rem;
+    font-size: 1.1rem;
+}
+
+/* Icon styling in buttons */
+.btn i {
+    margin-right: 0.5rem;
+}

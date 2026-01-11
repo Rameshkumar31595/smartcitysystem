@@ -1,0 +1,94 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Manage Issue - Smart City Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-header-content">
+    <h1 class="page-title">Manage Issue</h1>
+    <p class="page-subtitle">Update status and respond to reported issues</p>
+  </div>
+  <div class="page-header-actions">
+    <a href="{% url 'admin_issue_list' %}" class="btn btn-secondary">&larr; Back to Issues</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card card-dark mb-4">
+      <div class="card-body">
+        <h4 class="card-title">{{ issue.title }}</h4>
+        <p class="text-muted">Category: {{ issue.category.name }} • Reported by {{ issue.user.username }}</p>
+        <p>{{ issue.description|linebreaks }}</p>
+        <p><strong>Location:</strong> {{ issue.location }}</p>
+        {% if issue.image %}
+          <img src="{{ issue.image.url }}" class="img-fluid mt-2" alt="{{ issue.title }}">
+        {% endif %}
+        <p class="text-muted mt-3"><small>Created: {{ issue.created_at|date:"M d, Y g:i A" }} • Updated: {{ issue.updated_at|date:"M d, Y g:i A" }}</small></p>
+      </div>
+    </div>
+
+    <div class="card card-dark">
+      <div class="card-body">
+        <h5 class="card-title">Status Timeline</h5>
+        {% if status_history %}
+          <div class="list-group list-group-flush">
+            {% for history in status_history %}
+            <div class="list-group-item bg-transparent border-secondary">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">
+                  <span class="badge
+                    {% if history.status == 'OPEN' %} badge-open
+                    {% elif history.status == 'IN_PROGRESS' %} badge-progress
+                    {% elif history.status == 'RESOLVED' %} badge-resolved
+                    {% elif history.status == 'REJECTED' %} badge-rejected
+                    {% else %} bg-secondary
+                    {% endif %}">{{ history.get_status_display }}</span>
+                </h6>
+                <small class="text-muted">{{ history.changed_at|date:"M d, Y g:i A" }}</small>
+              </div>
+              {% if history.remarks %}
+                <p class="mb-1">{{ history.remarks }}</p>
+              {% endif %}
+              {% if history.changed_by %}
+                <small class="text-muted">Changed by: {{ history.changed_by.username }}</small>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-muted">No status changes yet.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card card-dark">
+      <div class="card-body">
+        <h5 class="card-title">Update Status</h5>
+        {% if allowed_status_choices %}
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-select">
+              {% for value, label in allowed_status_choices %}
+                <option value="{{ value }}">{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Remarks (optional)</label>
+            <textarea name="remarks" rows="3" class="form-control" placeholder="Add remarks for this status change..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Save</button>
+        </form>
+        {% else %}
+        <p class="text-muted mb-0">No further transitions are allowed from the current status.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

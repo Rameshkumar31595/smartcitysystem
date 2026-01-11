@@ -1,0 +1,74 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Admin Dashboard - Smart City Portal{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-12 d-flex justify-content-between align-items-center">
+    <h2>Admin Dashboard</h2>
+    <div>
+      <a href="{% url 'admin_issue_list' %}" class="btn btn-primary">Manage Issues</a>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-3">
+    <div class="card text-center">
+      <div class="card-body">
+        <h6 class="text-muted">Total Issues</h6>
+        <h3>{{ total_issues }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center">
+      <div class="card-body">
+        <h6 class="text-muted">Open</h6>
+        <h3>{{ open_issues }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center">
+      <div class="card-body">
+        <h6 class="text-muted">In Progress</h6>
+        <h3>{{ in_progress_issues }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center">
+      <div class="card-body">
+        <h6 class="text-muted">Resolved</h6>
+        <h3>{{ resolved_issues }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Recent Issues</h5>
+        <div class="list-group list-group-flush">
+          {% for issue in recent_issues %}
+          <a href="{% url 'admin_issue_detail' issue.pk %}" class="list-group-item list-group-item-action bg-transparent border-secondary">
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="mb-1">{{ issue.title }}</h6>
+              <small class="text-muted">{{ issue.created_at|date:"M d, Y g:i A" }}</small>
+            </div>
+            <small class="text-muted">{{ issue.category.name }} • {{ issue.user.username }}</small>
+          </a>
+          {% empty %}
+          <div class="list-group-item bg-transparent border-secondary">
+            <small class="text-muted">No issues reported yet.</small>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Delete Issue Category - Smart City Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="page-header-content">
+        <h1 class="page-title">Delete Issue Category</h1>
+        <p class="page-subtitle">Confirm deletion</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card card-dark border-danger">
+            <div class="card-body">
+                <h5 class="card-title text-danger">
+                    <i class="bi bi-exclamation-triangle"></i> Confirm Deletion
+                </h5>
+                <p class="mb-4">
+                    Are you sure you want to delete the issue category <strong>"{{ object.name }}"</strong>?
+                </p>
+                <p class="text-muted small">
+                    <strong>Warning:</strong> This will also delete all issues associated with this category.
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Yes, Delete
+                        </button>
+                        <a href="{% url 'issue_category_list' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

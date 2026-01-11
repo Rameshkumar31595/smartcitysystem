@@ -1,0 +1,202 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block title %}Home | Smart City Portal{% endblock %}
+
+{% block content %}
+<!-- ===== HERO SECTION ===== -->
+<section class="hero-section text-center py-5">
+    <div class="container">
+        <h1 class="hero-title mb-3">Find city services. Report civic issues. Track progress.</h1>
+        <p class="hero-subtitle mb-5">
+            Discover local services in your city, report infrastructure issues, and monitor resolution status in real-time.
+        </p>
+        {% if user.is_authenticated %}
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="{% url 'service_list' %}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-search"></i> Browse Services
+                </a>
+                <a href="{% url 'issue_create' %}" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-plus-circle"></i> Report an Issue
+                </a>
+            </div>
+        {% else %}
+            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                <a href="{% url 'signup' %}" class="btn btn-primary btn-lg px-5">
+                    Get Started
+                </a>
+                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg px-5">
+                    Sign In
+                </a>
+            </div>
+            <p class="text-muted mt-4">
+                Create an account to access city services and report issues
+            </p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- ===== FEATURES SECTION ===== -->
+<section class="features-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Card 1: Service Directory -->
+            <div class="col-md-4">
+                <div class="feature-card card">
+                    <div class="card-body">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-map"></i>
+                        </div>
+                        <h5 class="card-title">City Service Directory</h5>
+                        <p class="card-text text-secondary">
+                            Browse and search local services by category. Find utilities, transportation, waste management, and more.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Issue Reporting -->
+            <div class="col-md-4">
+                <div class="feature-card card">
+                    <div class="card-body">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-exclamation-circle"></i>
+                        </div>
+                        <h5 class="card-title">Issue Reporting</h5>
+                        <p class="card-text text-secondary">
+                            Report civic issues with title, location, and photos. Help authorities prioritize infrastructure maintenance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Status Tracking -->
+            <div class="col-md-4">
+                <div class="feature-card card">
+                    <div class="card-body">
+                        <div class="feature-icon mb-3">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <h5 class="card-title">Status Tracking</h5>
+                        <p class="card-text text-secondary">
+                            Monitor issue progress with real-time status updates and resolution timelines.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== HOW IT WORKS SECTION ===== -->
+<section class="how-it-works-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="how-title">How It Works</h2>
+            <p class="how-subtitle">Three simple steps to explore services and report issues</p>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            <!-- Step 1: Browse Services -->
+            <div class="col-lg-4 col-md-6">
+                <div class="step-card fade-up">
+                    <div class="step-number-badge">01</div>
+                    <div class="step-icon">
+                        <i class="bi bi-map"></i>
+                    </div>
+                    <h4 class="step-title">Browse Services</h4>
+                    <p class="step-description">
+                        Explore the comprehensive directory of city services. Search by name, filter by category, and find what you need.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 2: Report Issues -->
+            <div class="col-lg-4 col-md-6">
+                <div class="step-card fade-up" style="animation-delay: 0.1s;">
+                    <div class="step-number-badge">02</div>
+                    <div class="step-icon">
+                        <i class="bi bi-exclamation-circle"></i>
+                    </div>
+                    <h4 class="step-title">Report Issues</h4>
+                    <p class="step-description">
+                        Identify infrastructure problems in your neighborhood. Add location, photos, and details to help authorities prioritize.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 3: Track Progress -->
+            <div class="col-lg-4 col-md-6">
+                <div class="step-card fade-up" style="animation-delay: 0.2s;">
+                    <div class="step-number-badge">03</div>
+                    <div class="step-icon">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <h4 class="step-title">Track Progress</h4>
+                    <p class="step-description">
+                        Monitor issue resolution in real-time. Receive updates as authorities work to address reported problems.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CTA SECTION ===== -->
+<section class="cta-section py-5 text-center">
+    <div class="container">
+        <h2 class="mb-4">Ready to get started?</h2>
+        {% if user.is_authenticated %}
+            <p class="lead mb-4">Welcome back! Continue exploring services and managing issues.</p>
+            <a href="{% url 'service_list' %}" class="btn btn-primary btn-lg me-3">
+                Browse Services
+            </a>
+            <a href="{% url 'issue_list' %}" class="btn btn-outline-primary btn-lg">
+                My Issues
+            </a>
+        {% else %}
+            <p class="lead mb-4">Create an account to access all features and report issues.</p>
+            <a href="{% url 'signup' %}" class="btn btn-primary btn-lg me-3">
+                Get Started
+            </a>
+            <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">
+                Sign In
+            </a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+<!-- ===== FOOTER ===== -->
+<footer class="footer-section mt-5 py-4 border-top border-secondary border-opacity-25">
+    <div class="container text-center text-secondary">
+        <p class="mb-0">
+            Smart City Portal • Academic Project • Django + SQLite
+        </p>
+    </div>
+</footer>
+
+<!-- ===== FADE-UP ANIMATION SCRIPT ===== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-up');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-up').forEach(element => {
+        observer.observe(element);
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Manage Issues - Smart City Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-header-content">
+    <h1 class="page-title">All Issues</h1>
+    <p class="page-subtitle">Manage and track all reported issues</p>
+  </div>
+  <div class="page-header-actions">
+    <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col-md-8 mb-2">
+    <form method="get" class="d-flex">
+      <input type="text" name="search" class="form-control me-2" placeholder="Search title, description or location" value="{{ search_query }}">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+  </div>
+  <div class="col-md-4 mb-2">
+    <form method="get">
+      <select name="status" class="form-select" onchange="this.form.submit()">
+        <option value="">All Status</option>
+        {% for value, label in status_choices %}
+          <option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  {% for issue in issues %}
+  <div class="col-lg-6 mb-3">
+    <div class="card card-dark h-100">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h5 class="card-title mb-1">{{ issue.title }}</h5>
+            <small class="text-muted">{{ issue.category.name }} • {{ issue.user.username }}</small>
+          </div>
+          <span class="badge 
+            {% if issue.status == 'OPEN' %}bg-warning text-dark
+            {% elif issue.status == 'IN_PROGRESS' %}bg-info
+            {% elif issue.status == 'RESOLVED' %}bg-success
+            {% else %}bg-danger
+            {% endif %}">{{ issue.get_status_display }}</span>
+        </div>
+        <p class="mt-2 mb-1">{{ issue.description|truncatewords:25 }}</p>
+        <small class="text-muted">{{ issue.created_at|date:"M d, Y g:i A" }}</small>
+        <div class="mt-2">
+          <a href="{% url 'admin_issue_detail' issue.pk %}" class="btn btn-sm btn-primary">Manage</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <div class="alert alert-info">No issues found for the current filters.</div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

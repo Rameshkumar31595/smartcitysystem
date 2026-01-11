@@ -1,0 +1,87 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ issue.title }} - Smart City Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="page-header-content">
+        <h1 class="page-title">Issue Details</h1>
+    </div>
+    <div class="page-header-actions">
+        <a href="{% url 'issue_list' %}" class="btn btn-secondary">&larr; Back to My Issues</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title">{{ issue.title }}</h2>
+                <p class="text-muted">Category: {{ issue.category.name }}</p>
+                <p>
+                    <span class="badge 
+                        {% if issue.status == 'OPEN' %}bg-warning text-dark
+                        {% elif issue.status == 'IN_PROGRESS' %}bg-info
+                        {% elif issue.status == 'RESOLVED' %}bg-success
+                        {% else %}bg-danger
+                        {% endif %}">
+                        {{ issue.get_status_display }}
+                    </span>
+                </p>
+                <hr>
+                <h5>Description</h5>
+                <p>{{ issue.description|linebreaks }}</p>
+                
+                <hr>
+                <h5>Location</h5>
+                <p>{{ issue.location }}</p>
+
+                {% if issue.image %}
+                <hr>
+                <h5>Image</h5>
+                <img src="{{ issue.image.url }}" class="img-fluid" alt="{{ issue.title }}" style="max-width: 100%; height: auto;">
+                {% endif %}
+
+                <hr>
+                <p class="text-muted mb-0"><small>Reported on: {{ issue.created_at|date:"F d, Y g:i A" }}</small></p>
+                <p class="text-muted"><small>Last updated: {{ issue.updated_at|date:"F d, Y g:i A" }}</small></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Status Timeline</h5>
+                {% if status_history %}
+                    <div class="list-group list-group-flush">
+                        {% for history in status_history %}
+                        <div class="list-group-item bg-transparent border-secondary">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">
+                                    <span class="badge 
+                                        {% if history.status == 'OPEN' %}bg-warning text-dark
+                                        {% elif history.status == 'IN_PROGRESS' %}bg-info
+                                        {% elif history.status == 'RESOLVED' %}bg-success
+                                        {% else %}bg-danger
+                                        {% endif %}">
+                                        {{ history.get_status_display }}
+                                    </span>
+                                </h6>
+                                <small class="text-muted">{{ history.changed_at|date:"M d, Y g:i A" }}</small>
+                            </div>
+                            {% if history.remarks %}
+                                <p class="mb-1">{{ history.remarks }}</p>
+                            {% endif %}
+                            {% if history.changed_by %}
+                                <small class="text-muted">Changed by: {{ history.changed_by.username }}</small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">No status changes yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

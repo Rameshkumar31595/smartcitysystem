@@ -1,0 +1,98 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Admin Dashboard - Smart City Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-header-content">
+    <h1 class="page-title">System Overview</h1>
+    <p class="page-subtitle">Monitor and manage city services</p>
+  </div>
+  <div class="page-header-actions">
+    <a href="{% url 'admin_issue_list' %}" class="btn btn-secondary">View All Issues</a>
+  </div>
+</div>
+
+<!-- KPI Tiles -->
+<div class="row g-3">
+  <div class="col-md-3">
+    <div class="card kpi kpi-total">
+      <div class="card-body text-center">
+        <div class="text-muted">Total Issues</div>
+        <div class="value">{{ total_issues }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card kpi kpi-open">
+      <div class="card-body text-center">
+        <div class="text-muted">Open</div>
+        <div class="value">{{ open_issues }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card kpi kpi-progress">
+      <div class="card-body text-center">
+        <div class="text-muted">In Progress</div>
+        <div class="value">{{ in_progress_issues }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card kpi kpi-resolved">
+      <div class="card-body text-center">
+        <div class="text-muted">Resolved</div>
+        <div class="value">{{ resolved_issues }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Issues Table -->
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card card-dark">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Recent Issues</h5>
+        <div class="table-responsive table-dark-wrap">
+          <table class="table table-sm align-middle">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Category</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="text-end">Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for issue in recent_issues %}
+              <tr>
+                <td>
+                  <a href="{% url 'admin_issue_detail' issue.pk %}" class="text-decoration-none">{{ issue.title }}</a>
+                  <div class="text-muted small">{{ issue.user.username }}</div>
+                </td>
+                <td>{{ issue.category.name }}</td>
+                <td>
+                  <span class="badge
+                    {% if issue.status == 'OPEN' %} badge-open
+                    {% elif issue.status == 'IN_PROGRESS' %} badge-progress
+                    {% elif issue.status == 'RESOLVED' %} badge-resolved
+                    {% else %} badge-rejected
+                    {% endif %}">{{ issue.get_status_display }}</span>
+                </td>
+                <td class="text-end text-muted">{{ issue.created_at|date:"M d, Y g:i A" }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="4" class="text-muted">No issues reported yet.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

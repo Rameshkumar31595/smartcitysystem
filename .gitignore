@@ -1,0 +1,27 @@
+﻿# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+.venv312/
+smartcityportal/.venv312/
+env/
+venv/
+
+# Django
+db.sqlite3
+smartcityportal/db.sqlite3
+media/
+smartcityportal/media/
+staticfiles/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

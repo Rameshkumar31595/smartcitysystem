@@ -1,0 +1,65 @@
+{% extends 'base/base.html' %}
+
+{% block title %}My Issues - Smart City Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="page-header-content">
+        <h1 class="page-title">My Issues</h1>
+        <p class="page-subtitle">Track and manage your reported issues</p>
+    </div>
+    <div class="page-header-actions">
+        <a href="{% url 'issue_create' %}" class="btn btn-primary">Report New Issue</a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <form method="get">
+            <select name="status" class="form-select" onchange="this.form.submit()">
+                <option value="">All Status</option>
+                {% for value, label in status_choices %}
+                    <option value="{{ value }}" {% if selected_status == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    {% if issues %}
+        {% for issue in issues %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ issue.title }}</h5>
+                    <p class="card-text"><small class="text-muted">{{ issue.category.name }}</small></p>
+                    <p class="card-text">{{ issue.description|truncatewords:15 }}</p>
+                    <p class="card-text"><small><strong>Location:</strong> {{ issue.location }}</small></p>
+                    <p class="card-text">
+                        <span class="badge 
+                            {% if issue.status == 'OPEN' %}bg-warning text-dark
+                            {% elif issue.status == 'IN_PROGRESS' %}bg-info
+                            {% elif issue.status == 'RESOLVED' %}bg-success
+                            {% else %}bg-danger
+                            {% endif %}">
+                            {{ issue.get_status_display }}
+                        </span>
+                    </p>
+                    <p class="card-text"><small class="text-muted">{{ issue.created_at|date:"M d, Y" }}</small></p>
+                    <a href="{% url 'issue_detail' issue.pk %}" class="btn btn-primary btn-sm">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                No issues found. {% if selected_status %}<a href="{% url 'issue_list' %}">Clear filter</a>{% else %}<a href="{% url 'issue_create' %}">Report your first issue</a>{% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
