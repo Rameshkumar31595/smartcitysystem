@@ -1,86 +1,75 @@
 # Smart City Information and Issue Reporting System
 
-A web-based application developed using **Django** that helps citizens discover city services and report civic issues efficiently. Authorities can track, manage, and update issue statuses through an admin dashboard.
-
-This project is developed as part of the **Python Full Stack Development – SDP (2025–26 Even Semester)**.
+A Django-based web application that helps citizens discover city services, report civic issues, and track their resolution status.  
+This project is developed as part of **Python Full Stack Development – SDP (2025–26)**.
 
 ---
 
-## Problem Statement
+## 📌 Problem Statement
 
 Citizens often struggle to find accurate information about city services and report civic issues.  
-This platform provides details about public services and allows users to report problems such as road damage or water issues. Authorities can track and update issue status. Django manages reports and user interactions.
+This platform provides details about public services and allows users to report problems such as road damage or water issues.  
+Authorities can track and update issue status. Django manages reports and user interactions.
 
 ---
 
-## Core Features
+## 🎯 Core Features
 
-- City Service Directory  
-- Issue Reporting System  
-- Issue Status Tracking  
-- Role-based Access (Admin / User)  
-- Authentication (Sign Up / Sign In / Logout)  
-- Admin Dashboard for Management  
+- **City Service Directory**
+  - Browse and search city services by category
+  - View detailed information about each service
 
----
+- **Issue Reporting**
+  - Users can report civic issues with title, category, description, and location
+  - Issues are linked to relevant departments
 
-## Roles & Responsibilities
+- **Status Tracking**
+  - Track issue status (Open, In Progress, Resolved, Rejected)
+  - Real-time updates by admin authorities
 
-### User
-- Sign up and log in
-- Browse city services
-- Report civic issues
-- Track reported issues and their status
+- **Authentication System**
+  - User Sign Up & Sign In
+  - Role-based access control (Admin / User)
 
-### Admin
-- Manage city service categories
-- Manage issue categories
-- View and update reported issues
-- Update city information
-- Monitor overall system activity
+- **Admin Dashboard**
+  - Manage service categories
+  - Manage issue categories
+  - View and update reported issues
+  - Approve, reject, or resolve issues
 
 ---
 
-## Technology Stack
+## 👥 User Roles
 
-- **Backend Framework:** Django  
-- **Frontend:** Django Templates, HTML, CSS (Dark Theme UI)  
-- **Database:** SQLite (default Django database)  
-- **Authentication:** Django built-in authentication system  
+### 🔹 Admin
+- Updates city service information
+- Creates and deletes service categories
+- Creates and deletes issue categories
+- Reviews and updates issue status
 
-> SQLite is used for simplicity and rapid development. Django allows easy migration to PostgreSQL or other databases if required in the future.
+### 🔹 User
+- Registers and logs in to the platform
+- Browses city services
+- Reports civic issues
+- Tracks issue status
 
----
-
-## Project Structure
-
-smartcityportal/
-│
-├── accounts/ # User authentication & roles
-├── services/ # City services & categories
-├── issues/ # Issue reporting & tracking
-├── templates/ # HTML templates
-├── static/ # CSS and static files
-├── manage.py
-└── smartcityportal/ # Project configuration
-
+> ⚠️ Only **Admin** and **User** roles are implemented, strictly following the problem statement.
 
 ---
 
-## Key Functionalities Implemented
+## 🛠️ Tech Stack
 
-- Landing page for unauthenticated users
-- Redirect logged-in users directly to dashboard
-- Admin and User dashboards
-- Issue creation and tracking
-- Service directory with detailed views
-- Seed data for services and issue categories
-- Secure access control using Django decorators
+| Layer        | Technology |
+|-------------|------------|
+| Backend     | Django 4.2.27 |
+| Frontend    | Django Templates, HTML, CSS |
+| Database    | SQLite (default Django database) |
+| Styling     | Custom Dark Theme (CSS) |
+| Version Control | Git & GitHub |
+
+> SQLite is used as it is Django’s default database and fully satisfies the project requirements.
 
 ---
 
-## Setup Instructions (Local)
+## 📂 Project Structure
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Rameshkumar31595/smartcitysystem.git
