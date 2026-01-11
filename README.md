@@ -54,3 +54,33 @@ This platform provides details about public services and allows users to report 
 
 ## Project Structure
 
+smartcityportal/
+│
+├── accounts/ # User authentication & roles
+├── services/ # City services & categories
+├── issues/ # Issue reporting & tracking
+├── templates/ # HTML templates
+├── static/ # CSS and static files
+├── manage.py
+└── smartcityportal/ # Project configuration
+
+
+---
+
+## Key Functionalities Implemented
+
+- Landing page for unauthenticated users
+- Redirect logged-in users directly to dashboard
+- Admin and User dashboards
+- Issue creation and tracking
+- Service directory with detailed views
+- Seed data for services and issue categories
+- Secure access control using Django decorators
+
+---
+
+## Setup Instructions (Local)
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Rameshkumar31595/smartcitysystem.git
