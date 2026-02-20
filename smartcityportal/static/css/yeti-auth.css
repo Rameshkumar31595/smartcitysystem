@@ -1,0 +1,48 @@
+/* Scoped Yeti layout (won’t destroy your Bootstrap) */
+.yeti-auth-wrapper{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 18px;
+  padding-top: 30px;
+}
+
+/* Keep SVG centered and stable */
+.yeti-auth-wrapper .yeti-svg-container{
+  width: 220px;
+  height: 220px;
+}
+
+.yeti-auth-wrapper .svgContainer{
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.yeti-auth-wrapper .svgContainer > div{
+  position: relative;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  padding-bottom: 100%;
+}
+
+.yeti-auth-wrapper .mySVG{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+/* circular border */
+.yeti-auth-wrapper .svgContainer::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border: 2.5px solid #217093;
+  border-radius: 50%;
+}

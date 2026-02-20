@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Sign In - Smart City Portal{% endblock %}
+
+{% block content %}
+<div class="yeti-auth-wrapper">
+
+    <!-- Yeti SVG container -->
+    <div class="yeti-svg-container mb-4 text-center">
+        <div class="svgContainer">
+            <div>
+
+                <!-- START YETI SVG -->
+                <svg class="mySVG" xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink"
+                     viewBox="0 0 200 200">
+
+                    <!-- PASTE EVERYTHING FROM <defs> DOWN TO </svg> HERE -->
+                    <!-- DO NOT PASTE THE DEMO FORM BELOW IT -->
+
+                </svg>
+                <!-- END YETI SVG -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Your existing Django form (KEEP THIS) -->
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card">
+                <div class="card-body p-5">
+
+                    <div class="text-center mb-4">
+                        <h2 class="page-title">Sign In</h2>
+                        <p class="page-subtitle">Welcome back to Smart City Portal</p>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" 
+                                   name="username" 
+                                   class="form-control" 
+                                   placeholder="Enter your username"
+                                   required autofocus>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Password</label>
+                            <input type="password" 
+                                   name="password" 
+                                   class="form-control"
+                                   placeholder="Enter your password"
+                                   required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Sign In
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/yeti-auth.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+<script src="{% static 'js/yeti-auth.js' %}"></script>
+{% endblock %}

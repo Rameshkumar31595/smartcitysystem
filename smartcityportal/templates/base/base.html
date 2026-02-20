@@ -13,6 +13,8 @@
 
   <!-- Your theme AFTER Bootstrap -->
   <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+
+  {% block extra_css %}{% endblock %}
 </head>
 
 <body>
@@ -52,5 +54,9 @@
       });
     });
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+  <script src="{% static 'js/yeti-auth.js' %}"></script>
+
+  {% block extra_js %}{% endblock %}
 </body>
 </html>
