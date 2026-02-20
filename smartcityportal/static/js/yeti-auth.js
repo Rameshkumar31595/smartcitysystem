@@ -165,16 +165,30 @@ TweenMax.set(armR, {
    * Tracks focus, input changes, and blur events
    */
   username.addEventListener("focus", () => {
-    moveEyesToInput(username);
+    // Initialize eye position based on current text
+    const textLength = username.value.length;
+    const eyeX = Math.min(textLength * 0.5, 6); // Max 6px movement
+    TweenMax.to([eyeL, eyeR], 0.4, {
+      x: eyeX,
+      y: 0,
+      ease: Power2.easeOut
+    });
   });
 
   username.addEventListener("input", () => {
-    moveEyesToInput(username);
+    // Move eyes horizontally based on text length
+    const textLength = username.value.length;
+    const eyeX = Math.min(textLength * 0.5, 6); // Max 6px movement
+    
+    TweenMax.to([eyeL, eyeR], 0.3, {
+      x: eyeX,
+      y: 0,
+      ease: Power2.easeOut
+    });
 
     // Dynamic mouth expression based on input length
-    const len = username.value.length;
-    if (len === 0) setMouth("small");
-    else if (len < 6) setMouth("medium");
+    if (textLength === 0) setMouth("small");
+    else if (textLength < 6) setMouth("medium");
     else setMouth("large");
   });
 
