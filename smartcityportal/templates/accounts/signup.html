@@ -75,7 +75,20 @@
 
                     <div class="mb-3">
                         <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
-                        {{ form.password1 }}
+                        <div class="password-field-wrapper position-relative d-flex align-items-center">
+                            {{ form.password1 }}
+                            <button type="button" class="password-toggle" aria-label="Toggle password visibility" aria-pressed="false">
+                                <svg class="password-icon password-icon-show" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="M1.5 12s3.75-7 10.5-7 10.5 7 10.5 7-3.75 7-10.5 7-10.5-7-10.5-7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                    <circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+                                </svg>
+                                <svg class="password-icon password-icon-hide" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="M4 4l16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                                    <path d="M1.5 12s3.75-7 10.5-7c2.1 0 3.95.55 5.5 1.45" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M22.5 12s-3.75 7-10.5 7c-2.1 0-3.95-.55-5.5-1.45" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
                         {% if form.password1.errors %}
                             <div class="text-danger small mt-1">
                                 {% for error in form.password1.errors %}{{ error }}{% endfor %}
@@ -88,7 +101,20 @@
 
                     <div class="mb-4">
                         <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
-                        {{ form.password2 }}
+                        <div class="password-field-wrapper position-relative d-flex align-items-center">
+                            {{ form.password2 }}
+                            <button type="button" class="password-toggle" aria-label="Toggle password visibility" aria-pressed="false">
+                                <svg class="password-icon password-icon-show" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="M1.5 12s3.75-7 10.5-7 10.5 7 10.5 7-3.75 7-10.5 7-10.5-7-10.5-7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                    <circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+                                </svg>
+                                <svg class="password-icon password-icon-hide" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="M4 4l16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                                    <path d="M1.5 12s3.75-7 10.5-7c2.1 0 3.95.55 5.5 1.45" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M22.5 12s-3.75 7-10.5 7c-2.1 0-3.95-.55-5.5-1.45" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
                         {% if form.password2.errors %}
                             <div class="text-danger small mt-1">
                                 {% for error in form.password2.errors %}{{ error }}{% endfor %}

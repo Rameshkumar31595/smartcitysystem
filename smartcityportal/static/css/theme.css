@@ -791,3 +791,53 @@ main {
 .btn i {
     margin-right: 0.5rem;
 }
+
+/* =========================================
+   PASSWORD VISIBILITY TOGGLE
+   ========================================= */
+.password-toggle {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: var(--color-primary);
+}
+
+.password-toggle:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+.password-toggle .password-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.password-toggle .password-icon-hide {
+    display: none;
+}
+
+.password-toggle.is-visible .password-icon-show {
+    display: none;
+}
+
+.password-toggle.is-visible .password-icon-hide {
+    display: inline;
+}
+
+.password-field-wrapper input[type="password"],
+.password-field-wrapper input[type="text"] {
+    padding-right: 3rem;
+}
