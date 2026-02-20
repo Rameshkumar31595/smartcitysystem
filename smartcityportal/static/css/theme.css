@@ -2,26 +2,26 @@
    1. ROOT VARIABLES & GLOBAL RESET
    ========================================= */
 :root {
-    /* Palette: Clean Dark Mode */
-    --bg-body: #121212;
-    --bg-card: #25262b;
-    --bg-input: #2a2a2a;
+    /* Palette: Light Civic Theme */
+    --bg-body: #f4f6f9;
+    --bg-card: #ffffff;
+    --bg-input: #ffffff;
     
     /* Accents: Professional Blue */
-    --color-primary: #4da3ff;
-    --color-primary-hover: #357abd;
-    --color-success: #10b981;
-    --color-warning: #f59e0b;
-    --color-danger: #ef4444;
-    --color-info: #3b82f6;
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-success: #059669;
+    --color-warning: #d97706;
+    --color-danger: #dc2626;
+    --color-info: #2563eb;
 
     /* Text Hierarchy */
-    --text-main: #ffffff;        /* Pure white for headings */
-    --text-secondary: #e0e0e0;   /* Paragraph text */
-    --text-muted: #b0b0b0;       /* Secondary text */
+    --text-main: #111111;        /* Dark gray for headings */
+    --text-secondary: #333333;   /* Paragraph text */
+    --text-muted: #666666;       /* Secondary text */
     --text-dimmed: #9ca3af;      /* Actual dim text */
-    --border-subtle: rgba(255, 255, 255, 0.1);
-    --focus-ring: rgba(77, 163, 255, 0.4);
+    --border-subtle: rgba(0, 0, 0, 0.1);
+    --focus-ring: rgba(37, 99, 235, 0.2);
 
     /* Spacing & Radius */
     --radius-md: 0.75rem;
@@ -31,27 +31,32 @@
 /* =========================================
    2. GLOBAL TEXT OVERRIDES (Bootstrap Fix)
    ========================================= */
+html, body {
+    background-color: #f4f6f9 !important;
+    color: #333333 !important;
+}
+
 body {
-    background-color: #121212;
-    color: var(--text-main) !important;
+    background-color: #f4f6f9;
+    color: #333333 !important;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
     min-height: 100vh;
 }
 
 /* Force readable text everywhere */
 body, body * {
-    color: var(--text-main);
+    color: #333333;
 }
 
 /* Override Bootstrap's text-muted to be readable */
 .text-muted {
-    color: var(--text-muted) !important;
+    color: #666666 !important;
 }
 
 /* Ensure all text inside structural elements is visible */
 h1, h2, h3, h4, h5, h6, 
 .h1, .h2, .h3, .h4, .h5, .h6 {
-    color: var(--text-main) !important;
+    color: #111111 !important;
     font-weight: 600;
 }
 
@@ -65,35 +70,33 @@ p, span, div, td, th, li {
 }
 
 a {
-    color: #4da3ff !important;
+    color: #2563eb !important;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 a:hover {
-    color: #6eb5ff !important;
+    color: #1d4ed8 !important;
 }
 
 /* Lead text visibility */
 .lead {
-    color: var(--text-secondary) !important;
+    color: #333333 !important;
 }
 
 /* =========================================
    3. NAVBAR (Glassmorphism + Enhanced Brand)
    ========================================= */
 .navbar {
-    background-color: rgba(30, 30, 36, 0.75) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-subtle);
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e5e7eb !important;
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
 
 /* Enhanced Brand with Accent */
 .navbar-brand {
-    color: var(--text-main) !important;
+    color: #111111 !important;
     font-weight: 700;
     letter-spacing: 0.5px;
 }
@@ -102,8 +105,8 @@ a:hover {
     position: relative;
     font-weight: 800 !important;
     letter-spacing: 0.5px;
-    color: var(--text-main) !important;
-    text-shadow: 0 0 20px rgba(77, 163, 255, 0.3);
+    color: #111111 !important;
+    text-shadow: none;
     transition: all 0.3s ease;
 }
 
@@ -114,14 +117,14 @@ a:hover {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, var(--color-primary), rgba(77, 163, 255, 0));
+    background-color: #2563eb;
     opacity: 0.7;
     transition: opacity 0.3s ease;
 }
 
 .brand-accent:hover {
-    color: #9ecbff !important;
-    text-shadow: 0 0 25px rgba(77, 163, 255, 0.5);
+    color: #2563eb !important;
+    text-shadow: none;
 }
 
 .brand-accent:hover::after {
@@ -130,13 +133,13 @@ a:hover {
 
 /* Navigation Links */
 .nav-link {
-    color: var(--text-muted) !important;
+    color: #666666 !important;
     transition: all 0.2s ease;
     font-weight: 500;
 }
 
 .nav-link:hover, .nav-link.active {
-    color: var(--color-primary) !important;
+    color: #2563eb !important;
 }
 
 /* Navbar Text Styling (Welcome message) */
@@ -145,6 +148,7 @@ a:hover {
     font-weight: 500;
     line-height: 1.5;
     padding: 0.5rem 0;
+    color: #333333;
 }
 
 /* Navbar Right Section Alignment */
@@ -161,38 +165,38 @@ a:hover {
    4. CARDS - Enhanced Readability
    ========================================= */
 .card {
-    background-color: var(--bg-card) !important;
-    border: 1px solid var(--border-subtle);
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb;
     border-radius: var(--radius-lg);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin-bottom: 1.5rem;
 }
 
 .card, .card * {
-    color: var(--text-main) !important;
+    color: #333333 !important;
 }
 
 .card-header {
-    background-color: transparent !important;
-    border-bottom: 1px solid var(--border-subtle);
+    background-color: #f9fafb !important;
+    border-bottom: 1px solid #e5e7eb;
     padding: 1.25rem 1.5rem;
     font-weight: 600;
-    color: var(--text-main) !important;
+    color: #111111 !important;
 }
 
 .card-body {
     padding: 1.5rem;
-    color: var(--text-main) !important;
+    color: #333333 !important;
 }
 
 .card-title {
-    color: var(--text-main) !important;
+    color: #111111 !important;
     font-weight: 600;
     margin-bottom: 0.75rem;
 }
 
 .card-text {
-    color: var(--text-secondary) !important;
+    color: #333333 !important;
 }
 
 /* KPI Cards - Enhanced Labels */
@@ -201,7 +205,7 @@ a:hover {
 }
 
 .kpi .text-muted {
-    color: var(--text-muted) !important;
+    color: #666666 !important;
     font-weight: 500;
     font-size: 0.875rem;
     text-transform: uppercase;
@@ -209,7 +213,7 @@ a:hover {
 }
 
 .kpi .value {
-    color: var(--text-main) !important;
+    color: #111111 !important;
     font-size: 2.25rem;
     font-weight: 700;
     margin-top: 0.5rem;
@@ -232,7 +236,7 @@ main {
     gap: 1.5rem;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid #e5e7eb;
 }
 
 .page-header-content {
@@ -243,14 +247,14 @@ main {
 .page-title {
     font-size: 1.75rem;
     font-weight: 700;
-    color: var(--text-main) !important;
+    color: #111111 !important;
     margin-bottom: 0.25rem;
     line-height: 1.2;
 }
 
 .page-subtitle {
     font-size: 0.95rem;
-    color: var(--text-muted) !important;
+    color: #666666 !important;
     margin-bottom: 0;
 }
 
@@ -269,8 +273,8 @@ main {
 
 /* Dark Card variant for tables and admin panels */
 .card-dark {
-    background-color: var(--bg-card) !important;
-    border: 1px solid var(--border-subtle);
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb;
     border-radius: var(--radius-lg);
 }
 
@@ -308,63 +312,63 @@ main {
 }
 
 .btn-primary {
-    background-color: #4da3ff !important;
-    border-color: #4da3ff !important;
+    background-color: #2563eb !important;
+    border-color: #2563eb !important;
     color: #ffffff !important;
 }
 
 .btn-primary:hover {
-    background-color: #357abd !important;
-    border-color: #357abd !important;
+    background-color: #1d4ed8 !important;
+    border-color: #1d4ed8 !important;
 }
 
 .btn-secondary {
-    background-color: #374151 !important;
-    border-color: #374151 !important;
-    color: var(--text-main) !important;
+    background-color: #e5e7eb !important;
+    border-color: #e5e7eb !important;
+    color: #333333 !important;
 }
 
 .btn-secondary:hover {
-    background-color: #4b5563 !important;
-    border-color: #4b5563 !important;
+    background-color: #d1d5db !important;
+    border-color: #d1d5db !important;
 }
 
 .btn-outline-secondary {
-    color: var(--text-muted) !important;
-    border-color: var(--border-subtle) !important;
+    color: #666666 !important;
+    border-color: #d1d5db !important;
 }
 
 .btn-outline-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.05) !important;
-    color: var(--text-main) !important;
-    border-color: var(--text-muted) !important;
+    background-color: #f3f4f6 !important;
+    color: #333333 !important;
+    border-color: #9ca3af !important;
 }
 
 /* =========================================
    6. FORMS (Inputs & Controls)
    ========================================= */
 .form-control, .form-select {
-    background-color: #2a2a2a !important;
-    border: 1px solid #444 !important;
-    color: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 1px solid #d1d5db !important;
+    color: #333333 !important;
     border-radius: var(--radius-md);
     padding: 0.625rem 1rem;
 }
 
 .form-control:focus, .form-select:focus {
-    background-color: #2a2a2a !important;
-    color: #ffffff !important;
-    border-color: #4da3ff !important;
-    box-shadow: 0 0 0 4px rgba(77, 163, 255, 0.4) !important;
+    background-color: #ffffff !important;
+    color: #333333 !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
 }
 
 .form-control::placeholder {
-    color: #6b7280 !important;
+    color: #9ca3af !important;
     opacity: 1;
 }
 
 .form-label {
-    color: var(--text-muted) !important;
+    color: #333333 !important;
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
     font-weight: 500;
@@ -374,24 +378,24 @@ main {
    7. TABLES - Maximum Readability
    ========================================= */
 .table {
-    color: var(--text-secondary) !important;
+    color: #333333 !important;
     margin-bottom: 0;
 }
 
 .table > :not(caption) > * > * {
-    background-color: transparent !important;
-    border-bottom-color: var(--border-subtle) !important;
+    background-color: #ffffff !important;
+    border-bottom-color: #e5e7eb !important;
     padding: 1rem;
-    color: var(--text-secondary) !important;
+    color: #333333 !important;
 }
 
 .table tbody tr td {
-    color: var(--text-secondary) !important;
+    color: #333333 !important;
 }
 
 .table-hover > tbody > tr:hover > * {
-    background-color: rgba(255, 255, 255, 0.05) !important;
-    color: var(--text-main) !important;
+    background-color: #f9fafb !important;
+    color: #111111 !important;
 }
 
 .table th {
@@ -399,18 +403,18 @@ main {
     text-transform: uppercase;
     font-size: 0.75rem;
     letter-spacing: 0.05em;
-    color: var(--text-main) !important;
-    background-color: rgba(255, 255, 255, 0.02) !important;
+    color: #111111 !important;
+    background-color: #f3f4f6 !important;
 }
 
 /* Table links must be visible */
 .table a {
-    color: var(--color-primary) !important;
+    color: #2563eb !important;
     font-weight: 500;
 }
 
 .table a:hover {
-    color: #6eb5ff !important;
+    color: #1d4ed8 !important;
 }
 
 /* =========================================
@@ -426,27 +430,27 @@ main {
 
 /* Bootstrap badge overrides */
 .badge-open, .status-open {
-    background-color: rgba(59, 130, 246, 0.2) !important;
-    color: #93c5fd !important;
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    background-color: #dbeafe !important;
+    color: #1e40af !important;
+    border: 1px solid #bfdbfe;
 }
 
 .badge-progress, .status-in-progress {
-    background-color: rgba(245, 158, 11, 0.2) !important;
-    color: #fcd34d !important;
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+    border: 1px solid #fde68a;
 }
 
 .badge-resolved, .status-resolved {
-    background-color: rgba(16, 185, 129, 0.2) !important;
-    color: #6ee7b7 !important;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    background-color: #dcfce7 !important;
+    color: #166534 !important;
+    border: 1px solid #bbf7d0;
 }
 
 .badge-rejected, .status-rejected {
-    background-color: rgba(239, 68, 68, 0.2) !important;
-    color: #fca5a5 !important;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background-color: #fee2e2 !important;
+    color: #7f1d1d !important;
+    border: 1px solid #fecaca;
 }
 
 /* =========================================
@@ -468,9 +472,9 @@ main {
 }
 
 .alert-danger {
-    background-color: rgba(239, 68, 68, 0.15) !important;
-    border-color: rgba(239, 68, 68, 0.3) !important;
-    color: #fca5a5 !important;
+    background-color: #fee2e2 !important;
+    border-color: #fecaca !important;
+    color: #7f1d1d !important;
 }
 
 /* =========================================
@@ -478,14 +482,14 @@ main {
    ========================================= */
 .user-chip {
     display: inline-block;
-    background: linear-gradient(135deg, rgba(77, 163, 255, 0.2), rgba(77, 163, 255, 0.15));
-    color: #9ecbff !important;
+    background-color: #dbeafe;
+    color: #1e40af !important;
     padding: 0.5rem 1.25rem;
     border-radius: 9999px;
-    border: 1px solid rgba(77, 163, 255, 0.4);
+    border: 1px solid #bfdbfe;
     font-weight: 600;
     letter-spacing: 0.02em;
-    box-shadow: 0 2px 8px rgba(77, 163, 255, 0.15);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
     transition: all 0.2s ease;
 }
 
@@ -495,8 +499,8 @@ main {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, rgba(77, 163, 255, 0.05), rgba(77, 163, 255, 0.03));
-    border-bottom: 1px solid var(--border-subtle);
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
     padding-top: 6rem !important;
     padding-bottom: 6rem !important;
 }
@@ -505,10 +509,7 @@ main {
     font-size: 3.5rem;
     font-weight: 800;
     line-height: 1.2;
-    background: linear-gradient(135deg, var(--text-main), #9ecbff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #111111;
     margin-bottom: 1.5rem !important;
 }
 
@@ -520,7 +521,7 @@ main {
 
 .hero-subtitle {
     font-size: 1.25rem;
-    color: var(--text-secondary) !important;
+    color: #333333 !important;
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
@@ -531,56 +532,58 @@ main {
 .features-section {
     padding-top: 5rem !important;
     padding-bottom: 5rem !important;
+    background-color: #f9fafb;
 }
 
 .feature-card {
     height: 100%;
     transition: all 0.3s ease;
-    border: 1px solid var(--border-subtle);
-    background: linear-gradient(135deg, rgba(37, 38, 43, 0.8), rgba(26, 27, 30, 0.8));
-    backdrop-filter: blur(8px);
+    border: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    backdrop-filter: none;
 }
 
 .feature-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(77, 163, 255, 0.2);
-    border-color: rgba(77, 163, 255, 0.4);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+    border-color: #2563eb;
 }
 
 .feature-icon {
     font-size: 3rem;
-    color: var(--color-primary);
-    opacity: 0.9;
+    color: #2563eb;
+    opacity: 1;
     transition: all 0.3s ease;
 }
 
 .feature-card:hover .feature-icon {
     transform: scale(1.1);
-    color: #9ecbff;
+    color: #1d4ed8;
     opacity: 1;
 }
 
 .feature-card .card-body {
     text-align: center;
+    color: #333333 !important;
 }
 
 /* How It Works Section */
 .how-it-works-section {
     padding-top: 5rem !important;
     padding-bottom: 5rem !important;
-    background: linear-gradient(135deg, rgba(77, 163, 255, 0.03), transparent);
+    background-color: #f9fafb;
 }
 
 .how-title {
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: 0.5rem !important;
-    color: var(--text-main) !important;
+    color: #111111 !important;
 }
 
 .how-subtitle {
     font-size: 1.1rem;
-    color: var(--text-secondary) !important;
+    color: #333333 !important;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
@@ -588,8 +591,8 @@ main {
 
 /* Step Cards - Professional Design */
 .step-card {
-    background: linear-gradient(135deg, rgba(37, 38, 43, 0.9), rgba(26, 27, 30, 0.9));
-    border: 1px solid var(--border-subtle);
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: var(--radius-lg);
     padding: 2.5rem 1.75rem;
     text-align: center;
@@ -613,7 +616,7 @@ main {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(77, 163, 255, 0.2) 0%, transparent 70%);
+    background-color: transparent;
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -625,8 +628,8 @@ main {
 
 .step-card:hover {
     transform: translateY(-12px);
-    border-color: rgba(77, 163, 255, 0.5);
-    box-shadow: 0 20px 50px rgba(77, 163, 255, 0.25), inset 0 0 30px rgba(77, 163, 255, 0.08);
+    border-color: #2563eb;
+    box-shadow: 0 15px 40px rgba(37, 99, 235, 0.15);
 }
 
 /* Step number badge */
@@ -636,12 +639,12 @@ main {
     justify-content: center;
     width: 70px;
     height: 70px;
-    background: linear-gradient(135deg, var(--color-primary), #4f46e5);
+    background-color: #2563eb;
     border-radius: 50%;
     font-size: 1.75rem;
     font-weight: 800;
     color: #ffffff;
-    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     margin-bottom: 1.5rem;
     letter-spacing: 1px;
     position: relative;
@@ -651,7 +654,7 @@ main {
 
 .step-card:hover .step-number-badge {
     transform: scale(1.1);
-    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
 
 /* Step icon */
@@ -726,9 +729,9 @@ main {
 
 /* CTA Section */
 .cta-section {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.05));
-    border-top: 1px solid var(--border-subtle);
-    border-bottom: 1px solid var(--border-subtle);
+    background-color: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
     padding-top: 4rem !important;
     padding-bottom: 4rem !important;
 }
@@ -737,11 +740,12 @@ main {
     font-size: 2.25rem;
     font-weight: 700;
     margin-bottom: 1rem !important;
+    color: #111111 !important;
 }
 
 /* Footer Section */
 .footer-section {
-    background-color: rgba(26, 27, 30, 0.5);
+    background-color: #f3f4f6;
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
 }
