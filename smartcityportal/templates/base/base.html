@@ -50,6 +50,12 @@
           input.type = isHidden ? 'text' : 'password';
           toggleButton.classList.toggle('is-visible', isHidden);
           toggleButton.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
+          
+          // Dispatch custom event for Yeti animation
+          const event = new CustomEvent('passwordVisibilityChange', {
+            detail: { visible: isHidden, input: input }
+          });
+          document.dispatchEvent(event);
         });
       });
     });

@@ -190,14 +190,37 @@ TweenMax.set(armR, {
    * Triggers arm animations for privacy gesture
    */
   password.addEventListener("focus", () => {
-    coverEyes();
+    // Only cover eyes if password is hidden
+    if (password.type === "password") {
+      coverEyes();
+    }
     setMouth("small");
   });
 
   password.addEventListener("blur", () => {
     setTimeout(() => {
-      uncoverEyes();
+      // Only uncover if password is still hidden
+      if (password.type === "password") {
+        uncoverEyes();
+      }
       resetFace();
     }, 100);
+  });
+
+  /**
+   * Event Listener: Password Visibility Toggle
+   * Synchronizes Yeti animation with eye icon toggle
+   */
+  document.addEventListener("passwordVisibilityChange", (e) => {
+    // Only respond if this is our password field
+    if (e.detail.input === password) {
+      if (e.detail.visible) {
+        // Password now visible (text) - uncover eyes
+        uncoverEyes();
+      } else {
+        // Password now hidden - cover eyes
+        coverEyes();
+      }
+    }
   });
 });
