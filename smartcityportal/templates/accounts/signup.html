@@ -12,10 +12,17 @@
                     <p class="page-subtitle">Join Smart City Portal</p>
                 </div>
 
-                {% if form.non_field_errors %}
+                {% if form.errors %}
                 <div class="alert alert-danger">
-                    {% for error in form.non_field_errors %}
-                        {{ error }}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div>{{ field.label }}: {{ error }}</div>
+                        {% endfor %}
                     {% endfor %}
                 </div>
                 {% endif %}

@@ -13,6 +13,46 @@
   </div>
 </div>
 
+<!-- Quick Management Links -->
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="mb-3">
+          <i class="bi bi-people" style="font-size: 2rem; color: #0d6efd;"></i>
+        </div>
+        <h5 class="card-title">Manage Users</h5>
+        <p class="card-text text-muted small">Create, edit, or delete users and manage permissions</p>
+        <a href="{% url 'admin_user_list' %}" class="btn btn-sm btn-primary">Go to Users</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="mb-3">
+          <i class="bi bi-exclamation-circle" style="font-size: 2rem; color: #fd7e14;"></i>
+        </div>
+        <h5 class="card-title">Manage Issues</h5>
+        <p class="card-text text-muted small">Review and update issue status and details</p>
+        <a href="{% url 'admin_issue_list' %}" class="btn btn-sm btn-primary">Go to Issues</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="mb-3">
+          <i class="bi bi-tools" style="font-size: 2rem; color: #198754;"></i>
+        </div>
+        <h5 class="card-title">Manage Services</h5>
+        <p class="card-text text-muted small">Add, edit, or delete city services</p>
+        <a href="{% url 'service_list' %}" class="btn btn-sm btn-primary">Go to Services</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- KPI Tiles -->
 <div class="row g-3">
   <div class="col-md-3">
