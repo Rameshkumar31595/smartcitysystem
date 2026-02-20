@@ -1,6 +1,12 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-brand brand-accent" href="{% url 'home' %}">Smart City Portal</a>
+        <a class="navbar-brand brand-accent d-flex align-items-center gap-2" href="{% url 'home' %}">
+            <img src="{% static 'css/images/pfsd_logo.png' %}" 
+                 alt="Smart City Logo"
+                 class="site-logo">
+            <span>Smart City Portal</span>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>

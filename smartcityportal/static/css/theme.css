@@ -841,3 +841,32 @@ main {
 .password-field-wrapper input[type="text"] {
     padding-right: 3rem;
 }
+
+/* Strict Navbar Logo Control */
+.site-logo {
+    height: 38px;
+    max-height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.navbar {
+    min-height: 60px;
+}
+
+/* Enhanced Navbar Brand Scaling */
+.navbar {
+    min-height: 72px; /* Slightly taller navbar */
+}
+
+.navbar-brand {
+    font-size: 1.9rem;
+    font-weight: 700;
+}
+
+.site-logo {
+    height: 52px;
+    max-height: 56px;
+    width: auto;
+    object-fit: contain;
+}
