@@ -1,202 +1,398 @@
 {% extends "base/base.html" %}
 {% load static %}
 
-{% block title %}Home | Smart City Portal{% endblock %}
+{% block title %}Smart City Portal — City Services & Issue Reporting{% endblock %}
 
 {% block content %}
-<!-- ===== HERO SECTION ===== -->
-<section class="hero-section text-center py-5">
-    <div class="container">
-        <h1 class="hero-title mb-3">Find city services. Report civic issues. Track progress.</h1>
-        <p class="hero-subtitle mb-5">
-            Discover local services in your city, report infrastructure issues, and monitor resolution status in real-time.
+<!-- ===== PREMIUM HERO SECTION ===== -->
+<section class="hero-visual py-8 d-flex align-items-center justify-content-center">
+    <div class="container py-5 text-center" data-aos="zoom-out">
+        <label class="px-3 py-1 mb-4 fw-bold text-uppercase ls-wide badge-gradient rounded-1"
+            style="font-size: 0.75rem;">
+            <i class="bi bi-building me-2"></i>Smart City Information & Issue Reporting
+        </label>
+        <h1 class="fw-bolder mb-4"
+            style="font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 0.95; letter-spacing: -0.06em; color: #0f172a;">
+            Your City,<br><span class="gradient-brand-text">Your Voice.</span>
+        </h1>
+        <p class="mb-5 mx-auto text-secondary lh-relaxed"
+            style="max-width: 800px; font-size: 1.4rem; font-weight: 500;">
+            Find accurate information about city services and report civic issues like road damage or water problems.
+            Authorities track and resolve your reports with full transparency.
         </p>
-        {% if user.is_authenticated %}
-            <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <a href="{% url 'service_list' %}" class="btn btn-primary btn-lg">
-                    <i class="bi bi-search"></i> Browse Services
-                </a>
-                <a href="{% url 'issue_create' %}" class="btn btn-outline-primary btn-lg">
-                    <i class="bi bi-plus-circle"></i> Report an Issue
-                </a>
-            </div>
-        {% else %}
-            <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <a href="{% url 'signup' %}" class="btn btn-primary btn-lg px-5">
-                    Get Started
-                </a>
-                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg px-5">
-                    Sign In
-                </a>
-            </div>
-            <p class="text-muted mt-4">
-                Create an account to access city services and report issues
-            </p>
-        {% endif %}
-    </div>
-</section>
-
-<!-- ===== FEATURES SECTION ===== -->
-<section class="features-section py-5">
-    <div class="container">
-        <div class="row g-4">
-            <!-- Card 1: Service Directory -->
-            <div class="col-md-4">
-                <div class="feature-card card">
-                    <div class="card-body">
-                        <div class="feature-icon mb-3">
-                            <i class="bi bi-map"></i>
-                        </div>
-                        <h5 class="card-title">City Service Directory</h5>
-                        <p class="card-text text-secondary">
-                            Browse and search local services by category. Find utilities, transportation, waste management, and more.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2: Issue Reporting -->
-            <div class="col-md-4">
-                <div class="feature-card card">
-                    <div class="card-body">
-                        <div class="feature-icon mb-3">
-                            <i class="bi bi-exclamation-circle"></i>
-                        </div>
-                        <h5 class="card-title">Issue Reporting</h5>
-                        <p class="card-text text-secondary">
-                            Report civic issues with title, location, and photos. Help authorities prioritize infrastructure maintenance.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3: Status Tracking -->
-            <div class="col-md-4">
-                <div class="feature-card card">
-                    <div class="card-body">
-                        <div class="feature-icon mb-3">
-                            <i class="bi bi-clock-history"></i>
-                        </div>
-                        <h5 class="card-title">Status Tracking</h5>
-                        <p class="card-text text-secondary">
-                            Monitor issue progress with real-time status updates and resolution timelines.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== HOW IT WORKS SECTION ===== -->
-<section class="how-it-works-section py-5">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="how-title">How It Works</h2>
-            <p class="how-subtitle">Three simple steps to explore services and report issues</p>
-        </div>
-        
-        <div class="row g-4 justify-content-center">
-            <!-- Step 1: Browse Services -->
-            <div class="col-lg-4 col-md-6">
-                <div class="step-card fade-up">
-                    <div class="step-number-badge">01</div>
-                    <div class="step-icon">
-                        <i class="bi bi-map"></i>
-                    </div>
-                    <h4 class="step-title">Browse Services</h4>
-                    <p class="step-description">
-                        Explore the comprehensive directory of city services. Search by name, filter by category, and find what you need.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Step 2: Report Issues -->
-            <div class="col-lg-4 col-md-6">
-                <div class="step-card fade-up" style="animation-delay: 0.1s;">
-                    <div class="step-number-badge">02</div>
-                    <div class="step-icon">
-                        <i class="bi bi-exclamation-circle"></i>
-                    </div>
-                    <h4 class="step-title">Report Issues</h4>
-                    <p class="step-description">
-                        Identify infrastructure problems in your neighborhood. Add location, photos, and details to help authorities prioritize.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Step 3: Track Progress -->
-            <div class="col-lg-4 col-md-6">
-                <div class="step-card fade-up" style="animation-delay: 0.2s;">
-                    <div class="step-number-badge">03</div>
-                    <div class="step-icon">
-                        <i class="bi bi-clock-history"></i>
-                    </div>
-                    <h4 class="step-title">Track Progress</h4>
-                    <p class="step-description">
-                        Monitor issue resolution in real-time. Receive updates as authorities work to address reported problems.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== CTA SECTION ===== -->
-<section class="cta-section py-5 text-center">
-    <div class="container">
-        <h2 class="mb-4">Ready to get started?</h2>
-        {% if user.is_authenticated %}
-            <p class="lead mb-4">Welcome back! Continue exploring services and managing issues.</p>
-            <a href="{% url 'service_list' %}" class="btn btn-primary btn-lg me-3">
+        <div class="d-flex flex-wrap justify-content-center gap-4 mb-5" data-aos="fade-up" data-aos-delay="200">
+            {% if user.is_authenticated %}
+            <a href="{% url 'service_list' %}" class="btn-pill btn-primary-pill text-decoration-none shadow-lg px-5">
                 Browse Services
             </a>
-            <a href="{% url 'issue_list' %}" class="btn btn-outline-primary btn-lg">
-                My Issues
+            <a href="{% url 'issue_create' %}" class="btn-pill btn-outline-pill text-decoration-none px-5">
+                Report an Issue
             </a>
-        {% else %}
-            <p class="lead mb-4">Create an account to access all features and report issues.</p>
-            <a href="{% url 'signup' %}" class="btn btn-primary btn-lg me-3">
-                Get Started
+            {% else %}
+            <a href="{% url 'signup' %}" class="btn-pill btn-gradient text-decoration-none shadow-lg px-5">
+                Sign Up for Free
             </a>
-            <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">
+            <a href="{% url 'login' %}" class="btn-pill btn-outline-pill text-decoration-none px-5">
                 Sign In
             </a>
-        {% endif %}
+            {% endif %}
+        </div>
+        <div class="d-flex justify-content-center align-items-center gap-5 text-muted small fw-bold opacity-75"
+            data-aos="fade-up" data-aos-delay="400">
+            <span><i class="bi bi-geo-alt-fill text-primary me-2"></i>Service Directory</span>
+            <span class="vr"></span>
+            <span><i class="bi bi-exclamation-triangle-fill text-primary me-2"></i>Issue Reporting</span>
+            <span class="vr"></span>
+            <span><i class="bi bi-bar-chart-fill text-primary me-2"></i>Status Tracking</span>
+        </div>
     </div>
 </section>
-{% endblock %}
 
-{% block footer %}
-<!-- ===== FOOTER ===== -->
-<footer class="footer-section mt-5 py-4 border-top border-secondary border-opacity-25">
-    <div class="container text-center text-secondary">
-        <p class="mb-0">
-            Smart City Portal • Academic Project • Django + PostgreSQL • Developed by TEAM PFSD
-        </p>
+<!-- ===== DASHBOARD STATS BAND ===== -->
+<section class="py-5 border-top border-bottom bg-white overflow-hidden shadow-sm">
+    <div class="container">
+        <div class="row g-0 text-center">
+            <div class="col-6 col-lg-3 impact-stat-item" data-aos="fade-right" data-aos-delay="100">
+                <span class="stat-value">10k+</span>
+                <span class="stat-label">Registered Citizens</span>
+            </div>
+            <div class="col-6 col-lg-3 impact-stat-item" data-aos="fade-right" data-aos-delay="200">
+                <span class="stat-value">50+</span>
+                <span class="stat-label">City Services</span>
+            </div>
+            <div class="col-6 col-lg-3 impact-stat-item" data-aos="fade-left" data-aos-delay="300">
+                <span class="stat-value">95%</span>
+                <span class="stat-label">Issues Resolved</span>
+            </div>
+            <div class="col-6 col-lg-3 impact-stat-item" data-aos="fade-left" data-aos-delay="400">
+                <span class="stat-value">48h</span>
+                <span class="stat-label">Avg Response Time</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CORE CAPABILITIES (3x2 GRID) ===== -->
+<section id="services" class="py-8 bg-white">
+    <div class="container">
+        <div class="text-center mb-6" data-aos="fade-up">
+            <h2 class="fw-bold display-4 mb-3" style="letter-spacing: -0.03em;">City Service Directory</h2>
+            <p class="text-muted fs-5 mx-auto" style="max-width: 650px;">Browse all public services offered by city
+                departments. Find what you need quickly and easily.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card">
+                    <div class="icon-box"><i class="bi bi-droplet-half"></i></div>
+                    <h5 class="fw-bold mb-3">Water Supply</h5>
+                    <p class="text-muted small lh-relaxed">Information on water supply schedules, pipeline maintenance,
+                        and reporting water leakage or contamination issues.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card">
+                    <div class="icon-box"><i class="bi bi-signpost-split"></i></div>
+                    <h5 class="fw-bold mb-3">Roads & Infrastructure</h5>
+                    <p class="text-muted small lh-relaxed">Report potholes, damaged roads, broken streetlights, or other
+                        infrastructure problems in your area directly to authorities.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-card">
+                    <div class="icon-box"><i class="bi bi-trash3"></i></div>
+                    <h5 class="fw-bold mb-3">Waste Management</h5>
+                    <p class="text-muted small lh-relaxed">Access garbage collection schedules and report missed
+                        pickups, illegal dumping, or sanitation concerns in your locality.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-card">
+                    <div class="icon-box"><i class="bi bi-lightning-charge"></i></div>
+                    <h5 class="fw-bold mb-3">Electricity</h5>
+                    <p class="text-muted small lh-relaxed">View electricity outage schedules, report power failures, and
+                        stay updated on maintenance activities in your area.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+                <div class="feature-card">
+                    <div class="icon-box"><i class="bi bi-tree-fill"></i></div>
+                    <h5 class="fw-bold mb-3">Parks & Public Spaces</h5>
+                    <p class="text-muted small lh-relaxed">Find information about public parks, playgrounds, and
+                        community spaces. Report maintenance issues or suggest improvements.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+                <div class="feature-card">
+                    <div class="icon-box"><i class="bi bi-shield-check"></i></div>
+                    <h5 class="fw-bold mb-3">Public Safety</h5>
+                    <p class="text-muted small lh-relaxed">Report safety hazards, broken traffic signals, missing
+                        signage, or other public safety concerns to get them resolved quickly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== OPERATIONAL EXCELLENCE & KPI TRACKER ===== -->
+<section id="how-it-works" class="py-8"
+    style="background-color: #f8fafc; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9;">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5" data-aos="fade-right">
+                <h2 class="fw-bold display-5 mb-4" style="letter-spacing: -0.03em;">How It<br>Works</h2>
+                <p class="text-muted fs-5 mb-5 lh-relaxed">Our simple 3-step process ensures that every civic issue you
+                    report is tracked, assigned to the right department, and resolved with full transparency.</p>
+
+                <div class="timeline-container">
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h5 class="fw-bold mb-2">Register & Sign In</h5>
+                            <p class="text-muted small">Create your citizen account with a simple sign-up. Once logged
+                                in, you can access all city services and report issues.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h5 class="fw-bold mb-2">Report an Issue</h5>
+                            <p class="text-muted small">Describe the problem — road damage, water leakage, broken
+                                streetlight — select a category and submit. It's that easy.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h5 class="fw-bold mb-2">Track & Get Resolved</h5>
+                            <p class="text-muted small">Your issue is assigned to the right city department. Track its
+                                status in real-time until it's fully resolved by the admin.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 offset-lg-1" data-aos="fade-left">
+                <div class="p-5 bg-white border border-2 rounded-5 shadow-2">
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                        <h4 class="fw-bold m-0 text-dark">Issue Tracking Dashboard</h4>
+                        <span class="badge badge-gradient rounded-pill fs-7">
+                            <i class="bi bi-broadcast me-2"></i>Live Status
+                        </span>
+                    </div>
+
+                    <div class="mb-5">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="fw-bold text-secondary text-uppercase ls-wide fs-7">Issues
+                                Reported</span>
+                            <span class="text-primary fw-bold fs-5">2,847</span>
+                        </div>
+                        <div class="progress" style="height: 8px; border-radius: 20px; background: #f1f5f9;">
+                            <div class="progress-bar bg-primary" role="progressbar"
+                                style="width: 88%; border-radius: 20px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="fw-bold text-secondary text-uppercase ls-wide fs-7">Citizen Satisfaction</span>
+                            <span class="text-success fw-bold fs-5">4.7/5.0</span>
+                        </div>
+                        <div class="progress" style="height: 8px; border-radius: 20px; background: #f1f5f9;">
+                            <div class="progress-bar bg-success" role="progressbar"
+                                style="width: 94%; border-radius: 20px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-light p-4 rounded-4 border border-1 border-opacity-50">
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="bi bi-check-circle-fill text-success fs-5 me-3"></i>
+                            <span class="text-muted small fw-medium">Road repair completed on MG Road, Ward 12.</span>
+                        </div>
+                        <div class="d-flex align-items-start mb-3">
+                            <i class="bi bi-arrow-repeat text-primary fs-5 me-3"></i>
+                            <span class="text-muted small fw-medium">Water pipeline leak in Sector 5 — assigned to
+                                maintenance team.</span>
+                        </div>
+                        <div class="d-flex align-items-start">
+                            <i class="bi bi-exclamation-circle text-warning fs-5 me-3"></i>
+                            <span class="text-muted small fw-medium">New issue reported: Broken streetlight near Central
+                                Park.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CITY PULSE & UPDATES ===== -->
+<section id="updates" class="py-8 bg-white" data-aos="fade-up">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-6">
+            <div>
+                <h2 class="fw-bold display-5 mb-2" style="letter-spacing: -0.03em;">Latest Updates</h2>
+                <p class="text-muted fs-5 m-0">Stay informed about recent improvements and resolved issues in your city.
+                </p>
+            </div>
+            <a href="#"
+                class="text-primary fw-bold text-decoration-none border-bottom border-primary border-2 pb-1">View
+                All</a>
+        </div>
+        <div class="row g-5">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="news-card">
+                    <span class="news-tag">Roads</span>
+                    <h5 class="fw-bold mb-3 lh-base">Major Potholes Fixed on NH-44</h5>
+                    <p class="text-muted small mb-4">Following citizen reports, the Roads department completed pothole
+                        repair work on a 5km stretch of NH-44, improving commuter safety...</p>
+                    <a href="#" class="btn btn-link p-0 text-primary text-decoration-none fw-bold small">Read More</a>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="news-card">
+                    <span class="news-tag">Water Supply</span>
+                    <h5 class="fw-bold mb-3 lh-base">New Water Pipeline in Ward 8</h5>
+                    <p class="text-muted small mb-4">A new water distribution pipeline has been laid in Ward 8,
+                        resolving years of intermittent water supply issues raised by residents...</p>
+                    <a href="#" class="btn btn-link p-0 text-primary text-decoration-none fw-bold small">Read More</a>
+                </div>
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="news-card">
+                    <span class="news-tag">Public Safety</span>
+                    <h5 class="fw-bold mb-3 lh-base">200+ Streetlights Restored</h5>
+                    <p class="text-muted small mb-4">Thanks to citizen issue reports, over 200 non-functioning
+                        streetlights across 12 wards have been repaired, improving night safety...</p>
+                    <a href="#" class="btn btn-link p-0 text-primary text-decoration-none fw-bold small">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FINAL CALL TO ACTION ===== -->
+<section id="contact" class="py-8 bg-white border-top border-bottom">
+    <div class="container text-center">
+        <div class="p-5 p-lg-6 rounded-5 cta-enterprise-box" data-aos="zoom-in">
+            <div class="cta-mesh-overlay"></div>
+
+            <div class="position-absolute top-0 end-0 p-5 opacity-10">
+                <i class="bi bi-buildings text-white" style="font-size: 15rem;"></i>
+            </div>
+
+            <div class="position-relative py-5">
+                <h2 class="fw-bold display-4 mb-4 text-white" style="letter-spacing: -0.04em;">Make Your City Better
+                </h2>
+                <p class="fs-4 mb-5 cta-subtext mx-auto">
+                    Join thousands of citizens who are reporting issues and helping improve city services. Your voice
+                    matters — sign up today and make a difference.
+                </p>
+
+                {% if not user.is_authenticated %}
+                <div class="d-flex flex-wrap justify-content-center gap-4">
+                    <a href="{% url 'signup' %}" class="btn-gradient px-5 py-3 text-decoration-none rounded-4 fw-bold">
+                        <span>Sign Up for Free</span>
+                        <i class="bi bi-arrow-right-circle-fill ms-2"></i>
+                    </a>
+                </div>
+                {% else %}
+                <div class="d-flex flex-wrap justify-content-center gap-4">
+                    <a href="{% url 'issue_create' %}" class="btn-cta-premium text-decoration-none">
+                        <span>Report an Issue</span>
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                    </a>
+                </div>
+                {% endif %}
+
+                <div class="mt-5 d-flex justify-content-center align-items-center gap-4 text-white small fw-bold">
+                    <span><i class="bi bi-person-check me-2"></i>CITIZEN ROLE</span>
+                    <span class="vr"></span>
+                    <span><i class="bi bi-gear me-2"></i>ADMIN ROLE</span>
+                    <span class="vr"></span>
+                    <span><i class="bi bi-clipboard-data me-2"></i>REAL-TIME TRACKING</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER SECTION ===== -->
+<footer class="footer-professional">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-4">
+                <a class="navbar-brand fw-bold d-flex align-items-center mb-4" href="{% url 'home' %}">
+                    <img src="{% static 'css/images/pfsd_logo.png' %}" alt="CivicFlow Logo" class="brand-logo-img me-3"
+                        style="height: 50px;">
+                    <span class="gradient-brand-text" style="font-size: 1.7rem;">Smart City Portal</span>
+                </a>
+                <p class="text-secondary small lh-relaxed pe-lg-5 mb-5">
+                    A platform for citizens to find city service information and report civic issues. Authorities can
+                    track and update issue status for complete transparency.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="social-icon-wrapper"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" class="social-icon-wrapper"><i class="bi bi-meta"></i></a>
+                    <a href="#" class="social-icon-wrapper"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="social-icon-wrapper"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-lg-2 offset-lg-1">
+                <h6 class="fw-bold mb-4 text-dark text-uppercase ls-wide fs-7">Quick Links</h6>
+                <ul class="footer-link-list">
+                    <li class="footer-link-item"><a href="{% url 'home' %}" class="footer-link">Home</a></li>
+                    <li class="footer-link-item"><a href="{% url 'service_list' %}" class="footer-link">City
+                            Services</a></li>
+                    <li class="footer-link-item"><a href="{% url 'issue_create' %}" class="footer-link">Report Issue</a>
+                    </li>
+                    <li class="footer-link-item"><a href="#how-it-works" class="footer-link">How It Works</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-lg-2">
+                <h6 class="fw-bold mb-4 text-dark text-uppercase ls-wide fs-7">Roles</h6>
+                <ul class="footer-link-list">
+                    <li class="footer-link-item"><a href="#" class="footer-link">Citizen (User)</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">City Admin</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Issue Tracking</a></li>
+                    <li class="footer-link-item"><a href="#" class="footer-link">Status Updates</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <h6 class="fw-bold mb-4 text-dark text-uppercase ls-wide fs-7">Contact Us</h6>
+                <p class="text-muted small mb-4">Reach out for help or feedback about city services.</p>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon"><i class="bi bi-telephone"></i></div>
+                    <div>
+                        <div class="small text-muted">Helpline</div>
+                        <div class="fw-bold text-dark">+91 1800-CITY-HELP</div>
+                    </div>
+                </div>
+                <div class="footer-contact-item">
+                    <div class="footer-contact-icon"><i class="bi bi-envelope"></i></div>
+                    <div>
+                        <div class="small text-muted">Email Support</div>
+                        <div class="fw-bold text-dark">support@smartcityportal.in</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <span class="small text-muted">&copy; 2025 Smart City Portal — PS17 SDP Project. All rights
+                        reserved.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="d-flex gap-4 justify-content-center justify-content-md-end">
+                        <a href="#" class="text-decoration-none text-muted small">Compliance</a>
+                        <a href="#" class="text-decoration-none text-muted small">Privacy Policy</a>
+                        <a href="#" class="text-decoration-none text-muted small">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </footer>
 
-<!-- ===== FADE-UP ANIMATION SCRIPT ===== -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fade-up');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    document.querySelectorAll('.fade-up').forEach(element => {
-        observer.observe(element);
-    });
-});
-</script>
 {% endblock %}

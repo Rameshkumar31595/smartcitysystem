@@ -22,8 +22,20 @@ SECRET_KEY = "django-insecure-d8ms&5dwusg7xvfsx9^sbsdgt*y%(t^jjh58f4b+0e-6^zy2%4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    ".trycloudflare.com",
+]
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.trycloudflare.com",
+]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
