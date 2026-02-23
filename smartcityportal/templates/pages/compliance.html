@@ -1,0 +1,47 @@
+{% extends "base/base.html" %}
+{% block title %}Compliance — Smart City Portal{% endblock %}
+
+{% block content %}
+<section class="py-8 bg-white">
+    <div class="container" style="max-width: 800px;">
+        <h1 class="fw-bold display-5 mb-4" style="letter-spacing: -0.03em;">Compliance</h1>
+        <p class="text-muted mb-5">Last updated: February 2025</p>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">Regulatory Compliance</h4>
+            <p class="text-secondary lh-relaxed">The Smart City Portal operates in compliance with applicable laws and
+                regulations governing civic technology platforms. We adhere to data protection standards, accessibility
+                requirements, and government digital service guidelines.</p>
+        </div>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">Data Protection</h4>
+            <p class="text-secondary lh-relaxed">We comply with the Information Technology Act, 2000 and the Digital
+                Personal Data Protection Act, 2023 (DPDPA). All personal data collected through this platform is
+                processed lawfully, fairly, and transparently.</p>
+        </div>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">Accessibility</h4>
+            <p class="text-secondary lh-relaxed">Our platform is designed to be accessible to all citizens, including
+                those with disabilities. We follow WCAG 2.1 guidelines to ensure equitable access to city services and
+                issue reporting features.</p>
+        </div>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">Security Standards</h4>
+            <p class="text-secondary lh-relaxed">We implement industry-standard security measures including encryption
+                of data in transit (TLS/SSL), secure authentication mechanisms, regular security audits, and responsible
+                vulnerability disclosure practices.</p>
+        </div>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">Grievance Redressal</h4>
+            <p class="text-secondary lh-relaxed">For any compliance-related concerns or grievances, please contact our
+                Compliance Officer at <strong>compliance@smartcityportal.in</strong> or call our helpline.</p>
+        </div>
+
+        <a href="{% url 'home' %}" class="btn btn-outline-primary">&larr; Back to Home</a>
+    </div>
+</section>
+{% endblock %}

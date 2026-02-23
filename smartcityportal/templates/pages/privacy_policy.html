@@ -1,0 +1,65 @@
+{% extends "base/base.html" %}
+{% block title %}Privacy Policy — Smart City Portal{% endblock %}
+
+{% block content %}
+<section class="py-8 bg-white">
+    <div class="container" style="max-width: 800px;">
+        <h1 class="fw-bold display-5 mb-4" style="letter-spacing: -0.03em;">Privacy Policy</h1>
+        <p class="text-muted mb-5">Last updated: February 2025</p>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">Information We Collect</h4>
+            <p class="text-secondary lh-relaxed">When you register on the Smart City Portal, we collect basic personal
+                information including your name, email address, and username. When you report an issue, we collect the
+                issue details, location, and any images you upload.</p>
+        </div>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">How We Use Your Information</h4>
+            <p class="text-secondary lh-relaxed">Your information is used to:</p>
+            <ul class="text-secondary lh-relaxed">
+                <li>Provide and maintain the Smart City Portal services</li>
+                <li>Process and track your reported civic issues</li>
+                <li>Communicate status updates about your reports</li>
+                <li>Improve our platform and city services</li>
+                <li>Ensure security and prevent abuse</li>
+            </ul>
+        </div>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">Data Sharing</h4>
+            <p class="text-secondary lh-relaxed">Your reported issues and their details are shared with relevant city
+                departments and authorities for resolution. We do not sell or share your personal information with third
+                parties for marketing purposes.</p>
+        </div>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">Data Security</h4>
+            <p class="text-secondary lh-relaxed">We implement appropriate security measures to protect your personal
+                information against unauthorized access, alteration, disclosure, or destruction. All data transmission
+                is encrypted using SSL/TLS protocols.</p>
+        </div>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">Your Rights</h4>
+            <p class="text-secondary lh-relaxed">You have the right to access, correct, or delete your personal data
+                stored on our platform. You can update your profile information at any time through your account
+                settings, or contact us to request data deletion.</p>
+        </div>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">Cookies</h4>
+            <p class="text-secondary lh-relaxed">We use essential cookies for session management and authentication.
+                These cookies are necessary for the platform to function properly and cannot be disabled.</p>
+        </div>
+
+        <div class="mb-5">
+            <h4 class="fw-bold mb-3">Contact</h4>
+            <p class="text-secondary lh-relaxed">For privacy-related questions, contact us at
+                <strong>privacy@smartcityportal.in</strong>.</p>
+        </div>
+
+        <a href="{% url 'home' %}" class="btn btn-outline-primary">&larr; Back to Home</a>
+    </div>
+</section>
+{% endblock %}

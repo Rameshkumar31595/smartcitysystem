@@ -351,10 +351,13 @@
             <div class="col-6 col-lg-2">
                 <h6 class="fw-bold mb-4 text-dark text-uppercase ls-wide fs-7">Roles</h6>
                 <ul class="footer-link-list">
-                    <li class="footer-link-item"><a href="#" class="footer-link">Citizen (User)</a></li>
-                    <li class="footer-link-item"><a href="#" class="footer-link">City Admin</a></li>
-                    <li class="footer-link-item"><a href="#" class="footer-link">Issue Tracking</a></li>
-                    <li class="footer-link-item"><a href="#" class="footer-link">Status Updates</a></li>
+                    <li class="footer-link-item"><a href="{% url 'signup' %}" class="footer-link">Citizen (User)</a>
+                    </li>
+                    <li class="footer-link-item"><a href="{% url 'login' %}" class="footer-link">City Admin</a></li>
+                    <li class="footer-link-item"><a href="{% url 'issue_list' %}" class="footer-link">Issue Tracking</a>
+                    </li>
+                    <li class="footer-link-item"><a href="{% url 'issue_list' %}" class="footer-link">Status Updates</a>
+                    </li>
                 </ul>
             </div>
             <div class="col-lg-3">
@@ -364,14 +367,14 @@
                     <div class="footer-contact-icon"><i class="bi bi-telephone"></i></div>
                     <div>
                         <div class="small text-muted">Helpline</div>
-                        <div class="fw-bold text-dark">+91 1800-CITY-HELP</div>
+                        <div class="fw-bold text-dark">+91 9394493915</div>
                     </div>
                 </div>
                 <div class="footer-contact-item">
                     <div class="footer-contact-icon"><i class="bi bi-envelope"></i></div>
                     <div>
                         <div class="small text-muted">Email Support</div>
-                        <div class="fw-bold text-dark">support@smartcityportal.in</div>
+                        <div class="fw-bold text-dark">support.smartcity@gmail.com</div>
                     </div>
                 </div>
             </div>
@@ -380,14 +383,16 @@
         <div class="footer-bottom">
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <span class="small text-muted">&copy; 2025 Smart City Portal — PS17 SDP Project. All rights
+                    <span class="small text-muted">&copy; 2025 Smart City Portal,PS17 SDP Project. All rights
                         reserved.</span>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <div class="d-flex gap-4 justify-content-center justify-content-md-end">
-                        <a href="#" class="text-decoration-none text-muted small">Compliance</a>
-                        <a href="#" class="text-decoration-none text-muted small">Privacy Policy</a>
-                        <a href="#" class="text-decoration-none text-muted small">Terms of Service</a>
+                        <a href="{% url 'compliance' %}" class="text-decoration-none text-muted small">Compliance</a>
+                        <a href="{% url 'privacy_policy' %}" class="text-decoration-none text-muted small">Privacy
+                            Policy</a>
+                        <a href="{% url 'terms_of_service' %}" class="text-decoration-none text-muted small">Terms of
+                            Service</a>
                     </div>
                 </div>
             </div>

@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 from accounts.views import home_router
 
 urlpatterns = [
@@ -26,6 +27,9 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('services/', include('services.urls')),
     path('issues/', include('issues.urls')),
+    path('compliance/', TemplateView.as_view(template_name='pages/compliance.html'), name='compliance'),
+    path('privacy-policy/', TemplateView.as_view(template_name='pages/privacy_policy.html'), name='privacy_policy'),
+    path('terms-of-service/', TemplateView.as_view(template_name='pages/terms_of_service.html'), name='terms_of_service'),
 ]
 
 if settings.DEBUG:

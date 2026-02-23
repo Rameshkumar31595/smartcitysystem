@@ -28,6 +28,7 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', "127.0.0.1,localhost,.trycloudflare.com,.vercel.app").split(',')
 CSRF_TRUSTED_ORIGINS = [
     "https://*.trycloudflare.com",
+    "https://*.vercel.app",
 ]
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
