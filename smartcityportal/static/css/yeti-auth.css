@@ -1,27 +1,60 @@
-/* Scoped Yeti layout (won’t destroy your Bootstrap) */
-.yeti-auth-wrapper{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap: 18px;
-  padding-top: 30px;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* Scoped Yeti layout */
+.yeti-auth-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 85vh;
+  gap: 24px;
+  padding: 40px 20px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ambient Background Glow */
+.yeti-auth-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vw;
+  max-width: 800px;
+  max-height: 800px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, rgba(14, 165, 233, 0.05) 40%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* Keep SVG centered and stable */
-.yeti-auth-wrapper .yeti-svg-container{
+.yeti-auth-wrapper .yeti-svg-container {
   width: 220px;
   height: 220px;
+  position: relative;
+  z-index: 10;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.12));
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.yeti-auth-wrapper .svgContainer{
+.yeti-auth-wrapper .yeti-svg-container:hover {
+  transform: translateY(-8px);
+}
+
+.yeti-auth-wrapper .svgContainer {
   position: relative;
   width: 220px;
   height: 220px;
   border-radius: 50%;
   pointer-events: none;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.8), inset 0 -5px 15px rgba(0, 0, 0, 0.05);
 }
 
-.yeti-auth-wrapper .svgContainer > div{
+.yeti-auth-wrapper .svgContainer>div {
   position: relative;
   width: 100%;
   height: 0;
@@ -30,19 +63,206 @@
   padding-bottom: 100%;
 }
 
-.yeti-auth-wrapper .mySVG{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
+.yeti-auth-wrapper .mySVG {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
-/* circular border */
-.yeti-auth-wrapper .svgContainer::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border: 2.5px solid #217093;
+/* Premium circular border */
+.yeti-auth-wrapper .svgContainer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 4px solid rgba(255, 255, 255, 0.95);
   border-radius: 50%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Glassmorphism Card Override */
+.yeti-auth-wrapper .card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.yeti-auth-wrapper .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.7) inset !important;
+}
+
+.yeti-auth-wrapper .card-body {
+  padding: 3.5rem 2.5rem !important;
+}
+
+/* Typography Enhancements */
+.yeti-auth-wrapper .page-title {
+  font-weight: 800;
+  font-size: 1.85rem;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.yeti-auth-wrapper .page-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Premium Form Inputs */
+.yeti-auth-wrapper .form-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #334155;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.yeti-auth-wrapper .form-control {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  padding: 0.85rem 1.25rem !important;
+  font-size: 1rem !important;
+  font-weight: 500;
+  color: #0f172a !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) inset !important;
+}
+
+.yeti-auth-wrapper .form-control:focus {
+  background: #ffffff !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.02) inset !important;
+  outline: none !important;
+}
+
+.yeti-auth-wrapper .form-control::placeholder {
+  color: #94a3b8 !important;
+  font-weight: 400;
+}
+
+/* Password Toggle Enhancements */
+.yeti-auth-wrapper .password-field-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.yeti-auth-wrapper .password-toggle {
+  position: absolute;
+  right: 14px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.yeti-auth-wrapper .password-toggle:hover {
+  color: #6366f1;
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.yeti-auth-wrapper .password-toggle:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.yeti-auth-wrapper .password-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Toggle Logic State Classes (Do not rename these) */
+.yeti-auth-wrapper .password-icon-hide {
+  display: none;
+}
+
+.yeti-auth-wrapper .password-toggle[aria-pressed="true"] .password-icon-show {
+  display: none;
+}
+
+.yeti-auth-wrapper .password-toggle[aria-pressed="true"] .password-icon-hide {
+  display: block;
+}
+
+/* Primary Button Styling */
+.yeti-auth-wrapper .btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 0.9rem 1.5rem !important;
+  font-weight: 600 !important;
+  font-size: 1.05rem !important;
+  color: #ffffff !important;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
+  transition: all 0.3s ease !important;
+  margin-top: 1rem !important;
+}
+
+.yeti-auth-wrapper .btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4) !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
+}
+
+.yeti-auth-wrapper .btn-primary:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 2px 10px rgba(99, 102, 241, 0.3) !important;
+}
+
+/* Text Links */
+.yeti-auth-wrapper a {
+  color: #6366f1;
+  font-weight: 600;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.yeti-auth-wrapper a:hover {
+  color: #4338ca;
+  text-decoration: underline !important;
+}
+
+.yeti-auth-wrapper .text-muted {
+  color: #64748b !important;
+}
+
+/* Alerts Validation */
+.yeti-auth-wrapper .alert {
+  border-radius: 12px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.yeti-auth-wrapper .alert-danger {
+  background: rgba(254, 226, 226, 0.8);
+  color: #991b1b;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.yeti-auth-wrapper .alert-success {
+  background: rgba(220, 252, 231, 0.8);
+  color: #166534;
+  border: 1px solid rgba(134, 239, 172, 0.3);
 }
