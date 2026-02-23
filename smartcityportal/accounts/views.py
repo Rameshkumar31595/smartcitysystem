@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponseForbidden
 import logging
 from issues.models import Issue, IssueStatusHistory
-from .forms import SignUpForm, AdminUserCreateForm, AdminUserEditForm
+from .forms import SignUpForm, AdminUserCreateForm, AdminUserEditForm, UserProfileForm
 
 # Set up logging for signup and admin actions
 logger = logging.getLogger('accounts')
@@ -310,3 +310,20 @@ def admin_user_update_role(request, pk):
     user_obj.save(update_fields=['is_staff', 'role'])
     messages.success(request, f'Role updated for "{user_obj.username}".')
     return redirect('admin_user_list')
+
+@login_required
+def profile_view(request):
+    """View for users to manage their personal profile."""
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated successfully.')
+            return redirect('profile')
+    else:
+        form = UserProfileForm(instance=request.user)
+    
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts/profile.html', context)

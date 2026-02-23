@@ -126,3 +126,6 @@ AUTH_USER_MODEL = "accounts.User"
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"  # HomeRouter will decide based on role
 LOGOUT_REDIRECT_URL = "/"  # Returns to home (landing for anonymous)
+
+# Email config for local development
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
