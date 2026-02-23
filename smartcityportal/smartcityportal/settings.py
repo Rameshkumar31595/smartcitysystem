@@ -87,11 +87,10 @@ WSGI_APPLICATION = "smartcityportal.wsgi.application"
 DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get(
-            'DATABASE_URL', 
-            'postgres://postgres:password@localhost:5432/smartcitydb'
+            'DATABASE_URL',
+            f'sqlite:///{BASE_DIR / "db.sqlite3"}'
         ),
         conn_max_age=600,
-        conn_health_checks=True,
     )
 }
 
