@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.db.models import Q
 from .models import Issue, IssueCategory
 from .forms import IssueForm, IssueCategoryForm
 
@@ -60,6 +61,13 @@ class IssueCategoryListView(LoginRequiredMixin, AdminRequiredMixin, ListView):
     template_name = 'admin/issue_categories_list.html'
     context_object_name = 'categories'
     ordering = ['name']
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        q = self.request.GET.get('q', '').strip()
+        if q:
+            qs = qs.filter(Q(name__icontains=q) | Q(description__icontains=q))
+        return qs
 
 class IssueCategoryCreateView(LoginRequiredMixin, AdminRequiredMixin, CreateView):
     model = IssueCategory

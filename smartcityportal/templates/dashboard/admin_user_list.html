@@ -13,6 +13,18 @@
 
 <div class="card">
     <div class="card-body">
+        <!-- Search bar -->
+        <form method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control bg-light border-0"
+                    placeholder="Search users by username, name, or email..." value="{{ request.GET.q }}">
+                <button class="btn btn-primary px-4" type="submit"><i class="bi bi-search me-2"></i>Search</button>
+                {% if request.GET.q %}
+                <a href="{% url 'admin_user_list' %}" class="btn btn-outline-secondary">Clear</a>
+                {% endif %}
+            </div>
+        </form>
+
         <div class="table-responsive">
             <table class="table table-striped align-middle">
                 <thead>
@@ -27,45 +39,47 @@
                 </thead>
                 <tbody>
                     {% for user_obj in users %}
-                        <tr>
-                            <td>
-                                <strong>{{ user_obj.username }}</strong>
-                                <div class="text-muted small">Joined {{ user_obj.date_joined|date:"M d, Y" }}</div>
-                            </td>
-                            <td>{{ user_obj.first_name }} {{ user_obj.last_name }}</td>
-                            <td>{{ user_obj.email|default:"-" }}</td>
-                            <td>
-                                {% if user_obj.is_superuser %}
-                                    <span class="badge bg-danger">Superuser</span>
-                                {% elif user_obj.is_staff %}
-                                    <span class="badge bg-warning text-dark">Admin</span>
-                                {% else %}
-                                    <span class="badge bg-info">User</span>
+                    <tr>
+                        <td>
+                            <strong>{{ user_obj.username }}</strong>
+                            <div class="text-muted small">Joined {{ user_obj.date_joined|date:"M d, Y" }}</div>
+                        </td>
+                        <td>{{ user_obj.first_name }} {{ user_obj.last_name }}</td>
+                        <td>{{ user_obj.email|default:"-" }}</td>
+                        <td>
+                            {% if user_obj.is_superuser %}
+                            <span class="badge bg-danger">Superuser</span>
+                            {% elif user_obj.is_staff %}
+                            <span class="badge bg-warning text-dark">Admin</span>
+                            {% else %}
+                            <span class="badge bg-info">User</span>
+                            {% endif %}
+                            {% if user_obj.role == 'ADMIN' %}
+                            <br><small class="text-muted">{{ user_obj.get_role_display }}</small>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user_obj.is_active %}
+                            <span class="badge bg-success">Active</span>
+                            {% else %}
+                            <span class="badge bg-secondary">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a href="{% url 'admin_user_edit' user_obj.pk %}"
+                                    class="btn btn-outline-primary">Edit</a>
+                                {% if user_obj != request.user %}
+                                <a href="{% url 'admin_user_delete_confirm' user_obj.pk %}"
+                                    class="btn btn-outline-danger">Delete</a>
                                 {% endif %}
-                                {% if user_obj.role == 'ADMIN' %}
-                                    <br><small class="text-muted">{{ user_obj.get_role_display }}</small>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if user_obj.is_active %}
-                                    <span class="badge bg-success">Active</span>
-                                {% else %}
-                                    <span class="badge bg-secondary">Inactive</span>
-                                {% endif %}
-                            </td>
-                            <td class="text-end">
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <a href="{% url 'admin_user_edit' user_obj.pk %}" class="btn btn-outline-primary">Edit</a>
-                                    {% if user_obj != request.user %}
-                                        <a href="{% url 'admin_user_delete_confirm' user_obj.pk %}" class="btn btn-outline-danger">Delete</a>
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
+                            </div>
+                        </td>
+                    </tr>
                     {% empty %}
-                        <tr>
-                            <td colspan="6" class="text-center text-muted py-4">No users found.</td>
-                        </tr>
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">No users found.</td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>

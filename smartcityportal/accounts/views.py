@@ -168,7 +168,12 @@ def admin_user_list(request):
         return redirect('user_home')
 
     form = SignUpForm()
-    users = User.objects.all().order_by('username')
+    users = User.objects.all()
+    q = request.GET.get('q', '').strip()
+    if q:
+        users = users.filter(Q(username__icontains=q) | Q(first_name__icontains=q) | Q(last_name__icontains=q) | Q(email__icontains=q))
+    users = users.order_by('username')
+    
     context = {
         'users': users,
         'form': form,
