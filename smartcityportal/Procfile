@@ -1,0 +1,1 @@
+web: gunicorn smartcityportal.wsgi --log-file -
