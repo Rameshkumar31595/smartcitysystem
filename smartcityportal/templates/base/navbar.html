@@ -1,78 +1,107 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-        <a class="navbar-brand brand-accent d-flex align-items-center gap-2" href="{% url 'home' %}">
-            <img src="{% static 'css/images/pfsd_logo.png' %}" 
-                 alt="Smart City Logo"
-                 class="site-logo">
-            <span>Smart City Portal</span>
+    <div class="container">
+        <a class="navbar-brand brand-accent fw-bold d-flex align-items-center" href="{% url 'home' %}">
+            <img src="{% static 'css/images/pfsd_logo.png' %}" alt="CivicFlow Logo" class="brand-logo-img me-2"
+                style="height: 40px;">
+            <span class="gradient-brand-text" style="font-size: 1.35rem;">Smart City Portal</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            {% if user.is_authenticated %}
+            <ul class="navbar-nav mx-auto gap-1">
+                {% if user.is_authenticated %}
                 {% if user.is_staff or user.is_superuser or user.role == 'ADMIN' %}
-                    <!-- Admin Navigation -->
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'service_list' %}">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'admin_issue_list' %}">All Issues</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                Manage Categories
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{% url 'service_category_list' %}">Service Categories</a></li>
-                                <li><a class="dropdown-item" href="{% url 'issue_category_list' %}">Issue Categories</a></li>
-                            </ul>
-                        </li>
+                <!-- ===== ADMIN NAV LINKS ===== -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_dashboard' %}">
+                        <i class="bi bi-speedometer2 me-1"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_issue_list' %}">
+                        <i class="bi bi-exclamation-triangle me-1"></i>Manage Issues
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin_user_list' %}">
+                        <i class="bi bi-people me-1"></i>Manage Users
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-grid me-1"></i>Categories
+                    </a>
+                    <ul class="dropdown-menu shadow-lg border-0" style="border-radius: 12px;">
+                        <li><a class="dropdown-item py-2" href="{% url 'service_category_list' %}">
+                                <i class="bi bi-tags me-2"></i>Service Categories</a></li>
+                        <li><a class="dropdown-item py-2" href="{% url 'issue_category_list' %}">
+                                <i class="bi bi-bookmark me-2"></i>Issue Categories</a></li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'service_list' %}">
+                        <i class="bi bi-building me-1"></i>City Services
+                    </a>
+                </li>
                 {% else %}
-                    <!-- User Navigation -->
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'service_list' %}">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'issue_list' %}">My Issues</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'issue_create' %}">Report Issue</a>
-                        </li>
-                    </ul>
+                <!-- ===== USER NAV LINKS ===== -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'service_list' %}">
+                        <i class="bi bi-building me-1"></i>Browse Services
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'issue_create' %}">
+                        <i class="bi bi-plus-circle me-1"></i>Report Issue
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'issue_list' %}">
+                        <i class="bi bi-list-check me-1"></i>My Issues
+                    </a>
+                </li>
                 {% endif %}
-                <ul class="navbar-nav align-items-center">
-                    <li class="nav-item">
-                        <span class="navbar-text text-muted px-2">{{ user.username }}</span>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    </li>
-                </ul>
-            {% else %}
-                <!-- Public Navigation -->
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Sign In</a>
-                    </li>
-                    <li class="nav-item ms-2">
-                        <a class="btn btn-primary btn-sm" href="{% url 'signup' %}">Sign Up</a>
-                    </li>
-                </ul>
-            {% endif %}
+                {% else %}
+                <!-- ===== VISITOR NAV LINKS (Landing Page Anchors) ===== -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#how-it-works">How It Works</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#updates">Updates</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <div class="navbar-nav align-items-center">
+                {% if user.is_authenticated %}
+                <li class="nav-item d-flex align-items-center">
+                    <span class="navbar-text text-muted me-3 fw-medium">
+                        <i class="bi bi-person-circle me-1"></i>{{ user.username }}
+                    </span>
+                    <a class="nav-link px-3" href="{% url 'logout' %}"
+                        style="color: var(--color-danger) !important; background: rgba(239, 68, 68, 0.05);">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link text-dark fw-bold" href="{% url 'login' %}">Sign In</a>
+                </li>
+                <li class="nav-item ms-lg-3">
+                    <a class="btn btn-navbar-primary" href="{% url 'signup' %}">Sign Up Free</a>
+                </li>
+                {% endif %}
+            </div>
         </div>
     </div>
 </nav>
