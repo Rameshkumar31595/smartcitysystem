@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', "django-insecure-d8ms&5dwusg7xvfsx9^sb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', "127.0.0.1,localhost,.trycloudflare.com").split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', "127.0.0.1,localhost,.trycloudflare.com,.vercel.app").split(',')
 CSRF_TRUSTED_ORIGINS = [
     "https://*.trycloudflare.com",
 ]
