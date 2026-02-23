@@ -6,9 +6,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 85vh;
-  gap: 24px;
-  padding: 40px 20px;
+  min-height: calc(100vh - 80px);
+  gap: 0;
+  padding: 0px 20px;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   position: relative;
   z-index: 1;
@@ -32,22 +32,23 @@
 
 /* Keep SVG centered and stable */
 .yeti-auth-wrapper .yeti-svg-container {
-  width: 220px;
-  height: 220px;
+  width: 140px;
+  height: 140px;
   position: relative;
   z-index: 10;
-  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.10));
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  flex-shrink: 0;
 }
 
 .yeti-auth-wrapper .yeti-svg-container:hover {
-  transform: translateY(-8px);
+  transform: translateY(-4px);
 }
 
 .yeti-auth-wrapper .svgContainer {
   position: relative;
-  width: 220px;
-  height: 220px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   pointer-events: none;
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
@@ -100,22 +101,23 @@
 }
 
 .yeti-auth-wrapper .card-body {
-  padding: 3.5rem 2.5rem !important;
+  padding: 1.5rem 2rem !important;
 }
 
 /* Typography Enhancements */
 .yeti-auth-wrapper .page-title {
   font-weight: 800;
-  font-size: 1.85rem;
+  font-size: 1.4rem;
   color: #0f172a;
   letter-spacing: -0.03em;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .yeti-auth-wrapper .page-subtitle {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: #64748b;
   font-weight: 500;
+  margin-bottom: 0;
 }
 
 /* Premium Form Inputs */
@@ -131,8 +133,8 @@
   background: rgba(255, 255, 255, 0.9) !important;
   border: 2px solid #e2e8f0 !important;
   border-radius: 12px !important;
-  padding: 0.85rem 1.25rem !important;
-  font-size: 1rem !important;
+  padding: 0.6rem 1rem !important;
+  font-size: 0.95rem !important;
   font-weight: 500;
   color: #0f172a !important;
   transition: all 0.25s ease !important;
@@ -208,14 +210,14 @@
   background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
   border: none !important;
   border-radius: 12px !important;
-  padding: 0.9rem 1.5rem !important;
+  padding: 0.65rem 1.5rem !important;
   font-weight: 600 !important;
-  font-size: 1.05rem !important;
+  font-size: 0.95rem !important;
   color: #ffffff !important;
   letter-spacing: 0.02em;
   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
   transition: all 0.3s ease !important;
-  margin-top: 1rem !important;
+  margin-top: 0.25rem !important;
 }
 
 .yeti-auth-wrapper .btn-primary:hover {
@@ -265,4 +267,22 @@
   background: rgba(220, 252, 231, 0.8);
   color: #166534;
   border: 1px solid rgba(134, 239, 172, 0.3);
+}
+
+/* Yeti Friendly Quote */
+.yeti-auth-wrapper .yeti-quote {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6366f1;
+  font-style: italic;
+  margin: 6px 0 2px;
+  padding: 0;
+  letter-spacing: 0.01em;
+  opacity: 0.85;
+}
+
+.yeti-auth-wrapper .yeti-quote i {
+  margin-right: 6px;
+  font-size: 0.9rem;
+  vertical-align: -1px;
 }

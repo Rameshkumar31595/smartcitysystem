@@ -599,6 +599,36 @@ a:hover {
     background: var(--color-primary-hover) !important;
 }
 
+/* Professional Logout Button */
+.btn-logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(239, 68, 68, 0.08);
+    color: #dc2626 !important;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    font-size: 0.85rem;
+    letter-spacing: 0.01em;
+    border: 1px solid transparent;
+}
+
+.btn-logout:hover {
+    background: #ef4444;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3);
+    border-color: #ef4444;
+}
+
+.btn-logout:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(239, 68, 68, 0.2);
+}
+
 .navbar-text {
     font-size: 0.95rem;
     font-weight: 500;
