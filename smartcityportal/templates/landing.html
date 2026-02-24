@@ -11,10 +11,75 @@
             style="font-size: 0.75rem;">
             <i class="bi bi-building me-2"></i>Smart City Information & Issue Reporting
         </label>
+        <!-- ===== HERO TYPEWRITER STYLES (hero section only) ===== -->
+        <style>
+            /* Cursor rendered as ::after on the actively-typing span */
+            .hero-typing::after {
+                content: '';
+                display: inline-block;
+                width: 3px;
+                height: 0.82em;
+                background: currentColor;
+                margin-left: 3px;
+                border-radius: 2px;
+                vertical-align: text-bottom;
+                animation: hero-blink 0.75s steps(1) infinite;
+            }
+
+            @keyframes hero-blink {
+
+                0%,
+                100% {
+                    opacity: 1;
+                }
+
+                50% {
+                    opacity: 0;
+                }
+            }
+        </style>
+
         <h1 class="fw-bolder mb-4"
             style="font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 0.95; letter-spacing: -0.06em; color: #0f172a;">
-            Your City,<br><span class="gradient-brand-text">Your Voice.</span>
+            <span id="hero-line1"></span><br>
+            <span class="gradient-brand-text"><span id="hero-line2"></span></span>
         </h1>
+
+        <!-- ===== HERO TYPEWRITER SCRIPT (hero section only) ===== -->
+        <script>
+            (function () {
+                var line1 = 'Your City,';
+                var line2 = 'Your Voice.';
+                var el1 = document.getElementById('hero-line1');
+                var el2 = document.getElementById('hero-line2');
+                var delay = 60; // ms per character
+
+                function typeText(el, text, onDone) {
+                    el.classList.add('hero-typing'); // show cursor on this element
+                    var i = 0;
+                    function next() {
+                        if (i < text.length) {
+                            el.textContent += text.charAt(i);
+                            i++;
+                            setTimeout(next, delay);
+                        } else {
+                            el.classList.remove('hero-typing'); // hide cursor when done
+                            if (onDone) onDone();
+                        }
+                    }
+                    next();
+                }
+
+                // Start after a short initial pause
+                setTimeout(function () {
+                    typeText(el1, line1, function () {
+                        setTimeout(function () {
+                            typeText(el2, line2, null); // null = no callback, cursor gone
+                        }, 200);
+                    });
+                }, 300);
+            })();
+        </script>
         <p class="mb-5 mx-auto text-secondary lh-relaxed"
             style="max-width: 800px; font-size: 1.4rem; font-weight: 500;">
             Find accurate information about city services and report civic issues like road damage or water problems.
