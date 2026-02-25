@@ -2,27 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "smartcityportal/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb" }
-    },
-    {
-      "src": "build.sh",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "staticfiles" }
+      "src": "api/index.py",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "smartcityportal/wsgi.py"
+      "dest": "api/index.py"
     }
-  ],
-  "env": {
-    "DJANGO_SETTINGS_MODULE": "smartcityportal.settings"
-  }
+  ]
 }
