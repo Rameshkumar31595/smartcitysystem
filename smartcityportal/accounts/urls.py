@@ -45,4 +45,5 @@ urlpatterns = [
     path('admin/issues/', views.admin_issue_list, name='admin_issue_list'),
     path('admin/issues/<int:pk>/', views.admin_issue_detail, name='admin_issue_detail'),
     path('admin/issues/<int:pk>/delete/', views.admin_issue_delete, name='admin_issue_delete'),
+    path('admin/activity-logs/', views.admin_activity_logs, name='admin_activity_logs'),
 ]

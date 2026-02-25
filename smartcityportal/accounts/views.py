@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponseForbidden
 import logging
 from issues.models import Issue, IssueStatusHistory
+from .models import AdminActivityLog
 from .forms import SignUpForm, AdminUserCreateForm, AdminUserEditForm, UserProfileForm
 
 # Set up logging for signup and admin actions
@@ -156,7 +157,31 @@ def admin_issue_delete(request, pk):
         return redirect('admin_issue_detail', pk=pk)
 
     issue = get_object_or_404(Issue, pk=pk)
+    
+    # Log the deletion for transparency
+    issue_title = issue.title
+    issue_category = issue.category.name
+    issue_user = issue.user.username
+    
+    # Get IP address
+    ip_address = request.META.get('HTTP_X_FORWARDED_FOR')
+    if ip_address:
+        ip_address = ip_address.split(',')[0]
+    else:
+        ip_address = request.META.get('REMOTE_ADDR')
+    
+    AdminActivityLog.objects.create(
+        admin=request.user,
+        action_type=AdminActivityLog.ActionType.DELETE_ISSUE,
+        description=f'Deleted issue "{issue_title}" (Category: {issue_category}, Reported by: {issue_user})',
+        target_model='Issue',
+        target_id=issue.pk,
+        target_info=f'Title: {issue_title}, Category: {issue_category}, User: {issue_user}',
+        ip_address=ip_address
+    )
+    
     issue.delete()
+    logger.info(f'Issue deleted by admin: id={pk}, title="{issue_title}", by={request.user.username}')
     messages.success(request, 'Issue deleted successfully.')
     return redirect('admin_issue_list')
 
@@ -332,3 +357,46 @@ def profile_view(request):
         'form': form,
     }
     return render(request, 'accounts/profile.html', context)
+
+
+@login_required
+@user_passes_test(is_admin)
+def admin_activity_logs(request):
+    """View to display admin activity logs for transparency."""
+    if not (request.user.is_staff or request.user.is_superuser):
+        return HttpResponseForbidden('You do not have permission to access this page.')
+    
+    logs = AdminActivityLog.objects.select_related('admin').all()
+    
+    # Filter by action type
+    action_filter = request.GET.get('action_type')
+    if action_filter:
+        logs = logs.filter(action_type=action_filter)
+    
+    # Filter by admin
+    admin_filter = request.GET.get('admin')
+    if admin_filter:
+        logs = logs.filter(admin__username__icontains=admin_filter)
+    
+    # Search in description
+    search_query = request.GET.get('search')
+    if search_query:
+        logs = logs.filter(
+            Q(description__icontains=search_query) | 
+            Q(target_info__icontains=search_query)
+        )
+    
+    # Pagination - show 50 logs per page
+    from django.core.paginator import Paginator
+    paginator = Paginator(logs, 50)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'page_obj': page_obj,
+        'action_choices': AdminActivityLog.ActionType.choices,
+        'selected_action': action_filter,
+        'admin_filter': admin_filter or '',
+        'search_query': search_query or '',
+    }
+    return render(request, 'dashboard/admin_activity_logs.html', context)

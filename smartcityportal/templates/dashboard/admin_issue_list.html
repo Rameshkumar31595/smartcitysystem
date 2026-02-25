@@ -53,6 +53,7 @@
         <small class="text-muted">{{ issue.created_at|date:"M d, Y g:i A" }}</small>
         <div class="mt-2">
           <a href="{% url 'admin_issue_detail' issue.pk %}" class="btn btn-sm btn-primary">Manage</a>
+          <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete({{ issue.pk }})">Delete</button>
         </div>
       </div>
     </div>
@@ -63,4 +64,19 @@
   </div>
   {% endfor %}
 </div>
+
+<!-- Delete Confirmation Forms (hidden) -->
+{% for issue in issues %}
+<form id="deleteForm-{{ issue.pk }}" method="post" action="{% url 'admin_issue_delete' issue.pk }}" style="display: none;">
+  {% csrf_token %}
+</form>
+{% endfor %}
+
+<script>
+function confirmDelete(issueId) {
+  if (confirm('Are you sure you want to delete this issue? This action cannot be undone and will be logged in the admin activity log.')) {
+    document.getElementById('deleteForm-' + issueId).submit();
+  }
+}
+</script>
 {% endblock %}
