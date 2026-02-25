@@ -1,20 +1,18 @@
 import os
 import sys
 
-# Add the parent directory to the path so we can import from smartcityportal
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add project root to path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-# Set up Django
+# Configure Django settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smartcityportal.settings')
 
+# Initialize Django before importing anything else
 import django
 django.setup()
 
-from django.core.handlers.wsgi import WSGIHandler
-from django.core.wsgi import get_wsgi_application
+# Import WSGI application
+from smartcityportal.wsgi import application
 
-# Create the WSGI application
-application = get_wsgi_application()
-
-# Vercel expects 'app' to be the handler
+# Export for Vercel - it will handle the WSGI interface
 app = application
