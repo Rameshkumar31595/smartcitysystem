@@ -1,14 +1,14 @@
 {
   "builds": [
     {
-      "src": "smartcityportal/wsgi.py",
+      "src": "index.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "smartcityportal/wsgi.py"
+      "dest": "index.py"
     }
   ]
 }
