@@ -67,7 +67,7 @@
 
 <!-- Delete Confirmation Forms (hidden) -->
 {% for issue in issues %}
-<form id="deleteForm-{{ issue.pk }}" method="post" action="{% url 'admin_issue_delete' issue.pk }}" style="display: none;">
+<form id="deleteForm-{{ issue.pk }}" method="post" action="{% url 'admin_issue_delete' issue.pk %}" style="display: none;">
   {% csrf_token %}
 </form>
 {% endfor %}
