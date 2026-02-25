@@ -1,18 +1,22 @@
 import os
 import sys
 
-# Add the project directory to the path
+# Add project to path
 sys.path.insert(0, os.path.dirname(__file__))
 
-# Set Django settings module
+# Django settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smartcityportal.settings')
 
-# Import Django and setup
+# Import and setup Django first
 import django
 django.setup()
 
-# Import the WSGI application
+# Now import the app
 from smartcityportal.wsgi import application
 
-# Vercel expects "app" as the WSGI application
+# This is what Vercel will use
 app = application
+
+# Handler for Vercel
+def handler(request, response):
+    return app(request, response)
