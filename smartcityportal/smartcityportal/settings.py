@@ -31,11 +31,38 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.trycloudflare.com",
     "https://*.vercel.app",
     "https://smartcitysystem.vercel.app",
+    "https://smartcitysystem.vercel.app:443",
 ]
+
+# ============================================================================
+# SECURITY CONFIGURATION FOR PRODUCTION (Vercel)
+# ============================================================================
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
+
+# Redirect HTTP to HTTPS in production
+SECURE_SSL_REDIRECT = not DEBUG
+
+# Security headers
+SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0  # 1 year for production
+SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
+SECURE_HSTS_PRELOAD = not DEBUG
+
+# Secure cookie settings
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+
+# X-Frame-Options and other security headers
+if not DEBUG:
+    SECURE_CONTENT_SECURITY_POLICY = {
+        'default-src': ("'self'",),
+        'script-src': ("'self'", "'unsafe-inline'", "cdn.jsdelivr.net"),
+        'style-src': ("'self'", "'unsafe-inline'", "cdn.jsdelivr.net"),
+        'img-src': ("'self'", "data:", "*.vercel.com", "*.vercel.app"),
+    }
+
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 # Application definition
