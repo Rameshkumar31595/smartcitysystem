@@ -3,216 +3,639 @@
 
 {% block title %}Smart City Portal — City Services & Issue Reporting{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* -------- LANDING-ONLY STYLES -------- */
+
+    /* Hero typewriter cursor */
+    .hero-typing::after {
+        content: '';
+        display: inline-block;
+        width: 3px;
+        height: 0.82em;
+        background: currentColor;
+        margin-left: 3px;
+        border-radius: 2px;
+        vertical-align: text-bottom;
+        animation: hero-blink 0.75s steps(1) infinite;
+    }
+
+    @keyframes hero-blink {
+
+        0%,
+        100% {
+            opacity: 1
+        }
+
+        50% {
+            opacity: 0
+        }
+    }
+
+    /* Particle canvas behind hero */
+    #hero-canvas {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* Hero headline gradient */
+    .hero-headline {
+        font-size: clamp(2.8rem, 8vw, 6rem);
+        line-height: 0.95;
+        letter-spacing: -0.055em;
+        color: #0f172a;
+        font-weight: 900;
+    }
+
+    .hero-headline .accent-word {
+        background: linear-gradient(135deg, #1d4ed8 0%, #06b6d4 60%, #818cf8 100%);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: shimmer 3.5s linear infinite;
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -200% center
+        }
+
+        100% {
+            background-position: 200% center
+        }
+    }
+
+    /* Stats band — light card design matching site palette */
+    .stats-band {
+        background: #ffffff;
+        border-top: 1px solid #e8f0fe;
+        border-bottom: 1px solid #e8f0fe;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stats-band::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse 60% 80% at 0% 50%, rgba(29, 78, 216, 0.04) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 80% at 100% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 60%);
+        pointer-events: none;
+    }
+
+    /* Each stat card */
+    .stat-card {
+        text-align: center;
+        padding: 2.75rem 1.5rem;
+        border-radius: 20px;
+        background: #ffffff;
+        border: 1.5px solid rgba(29, 78, 216, 0.08);
+        transition: all 0.35s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #1d4ed8, #06b6d4);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 40px rgba(29, 78, 216, 0.10);
+        border-color: rgba(29, 78, 216, 0.16);
+    }
+
+    .stat-card:hover::before {
+        opacity: 1;
+    }
+
+    /* Gradient number text */
+    .stat-num {
+        display: block;
+        font-size: clamp(2.4rem, 5vw, 3.6rem);
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        line-height: 1;
+        background: linear-gradient(135deg, #1d4ed8 0%, #0891b2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-lbl {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: #64748b;
+    }
+
+    .stat-icon-wrap {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(29, 78, 216, 0.08), rgba(6, 182, 212, 0.08));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.2rem;
+        font-size: 1.4rem;
+        color: #1d4ed8;
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover .stat-icon-wrap {
+        background: linear-gradient(135deg, #1d4ed8, #0891b2);
+        color: #fff;
+    }
+
+    @keyframes gradShift {
+
+        0%,
+        100% {
+            background-position: 0% 50%
+        }
+
+        50% {
+            background-position: 100% 50%
+        }
+    }
+
+    .stat-value-band {
+        font-size: clamp(2.2rem, 5vw, 3.8rem);
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        color: #fff;
+        display: block;
+        line-height: 1;
+    }
+
+    .stat-label-band {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: rgba(186, 230, 253, 0.85);
+        display: block;
+        margin-top: 0.4rem;
+    }
+
+    /* Section heading accent */
+    .section-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, rgba(29, 78, 216, 0.09), rgba(6, 182, 212, 0.09));
+        border: 1px solid rgba(29, 78, 216, 0.14);
+        color: hsl(220, 72%, 52%);
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.13em;
+        padding: 0.38rem 1rem;
+        border-radius: 50px;
+        margin-bottom: 1rem;
+    }
+
+    .section-label-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #1d4ed8, #06b6d4);
+    }
+
+    /* Feature card icon colours */
+    .icon-water {
+        background: linear-gradient(135deg, rgba(6, 182, 212, .13), rgba(14, 165, 233, .13));
+        border-color: rgba(6, 182, 212, .18) !important;
+    }
+
+    .icon-road {
+        background: linear-gradient(135deg, rgba(245, 158, 11, .13), rgba(251, 191, 36, .13));
+        border-color: rgba(245, 158, 11, .18) !important;
+    }
+
+    .icon-waste {
+        background: linear-gradient(135deg, rgba(34, 197, 94, .13), rgba(74, 222, 128, .13));
+        border-color: rgba(34, 197, 94, .18) !important;
+    }
+
+    .icon-electric {
+        background: linear-gradient(135deg, rgba(234, 179, 8, .13), rgba(253, 224, 71, .13));
+        border-color: rgba(234, 179, 8, .18) !important;
+    }
+
+    .icon-parks {
+        background: linear-gradient(135deg, rgba(34, 197, 94, .12), rgba(20, 184, 166, .12));
+        border-color: rgba(34, 197, 94, .18) !important;
+    }
+
+    .icon-safety {
+        background: linear-gradient(135deg, rgba(239, 68, 68, .10), rgba(248, 113, 113, .10));
+        border-color: rgba(239, 68, 68, .15) !important;
+    }
+
+    .icon-water i, .icon-water svg {
+        color: #0891b2 !important;
+    }
+
+    .icon-road i, .icon-road svg {
+        color: #d97706 !important;
+    }
+
+    .icon-waste i, .icon-waste svg {
+        color: #16a34a !important;
+    }
+
+    .icon-electric i, .icon-electric svg {
+        color: #ca8a04 !important;
+    }
+
+    .icon-parks i, .icon-parks svg {
+        color: #15803d !important;
+    }
+
+    .icon-safety i, .icon-safety svg {
+        color: #dc2626 !important;
+    }
+
+    /* Feature card hover: keep icon colour but white text */
+    .feature-card:hover .icon-box i,
+    .feature-card:hover .icon-box svg {
+        color: #ffffff !important;
+    }
+
+    /* Tracking dashboard mock */
+    .tracking-mock {
+        background: #fff;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 2.25rem;
+        box-shadow: 0 20px 60px rgba(15, 23, 42, 0.10), 0 4px 16px rgba(0, 0, 0, 0.04);
+        position: relative;
+    }
+
+    .tracking-mock::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: 32px;
+        right: 32px;
+        height: 4px;
+        background: linear-gradient(90deg, #1d4ed8, #06b6d4);
+        border-radius: 0 0 4px 4px;
+    }
+
+    .live-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: rgba(34, 197, 94, 0.10);
+        color: #15803d;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.8rem;
+        border-radius: 50px;
+        border: 1px solid rgba(34, 197, 94, 0.20);
+    }
+
+    .live-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #22c55e;
+        animation: pulseDot 1.6s infinite;
+    }
+
+    @keyframes pulseDot {
+
+        0%,
+        100% {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5)
+        }
+
+        50% {
+            box-shadow: 0 0 0 6px rgba(34, 197, 94, 0)
+        }
+    }
+
+    .progress-animated {
+        transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .activity-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.875rem;
+        padding: 0.85rem 1rem;
+        border-radius: 14px;
+        background: #f8fafc;
+        border: 1px solid #f1f5f9;
+        margin-bottom: 0.6rem;
+        transition: all 0.25s ease;
+    }
+
+    .activity-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .activity-row:hover {
+        background: #f0f7ff;
+        border-color: rgba(29, 78, 216, 0.10);
+        transform: translateX(4px);
+    }
+
+    .activity-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 0.9rem;
+    }
+
+    .activity-icon.resolved {
+        background: rgba(34, 197, 94, .12);
+        color: #16a34a;
+    }
+
+    .activity-icon.in-progress {
+        background: rgba(59, 130, 246, .12);
+        color: #2563eb;
+    }
+
+    .activity-icon.new {
+        background: rgba(245, 158, 11, .12);
+        color: #d97706;
+    }
+
+    /* News cards coloured top strip */
+    .news-card-water {
+        --card-accent: #0891b2;
+    }
+
+    .news-card-roads {
+        --card-accent: #d97706;
+    }
+
+    .news-card-safety {
+        --card-accent: #dc2626;
+    }
+
+    .news-card::after {
+        background: var(--card-accent, linear-gradient(90deg, #1d4ed8, #06b6d4));
+    }
+
+    /* Scroll arrow bounce */
+    .scroll-arrow {
+        animation: bounceArrow 2s ease-in-out infinite;
+    }
+
+    @keyframes bounceArrow {
+
+        0%,
+        100% {
+            transform: translateY(0)
+        }
+
+        50% {
+            transform: translateY(8px)
+        }
+    }
+
+</style>
+{% endblock %}
+
 {% block content %}
-<!-- ===== PREMIUM HERO SECTION ===== -->
+
+<!-- ===== HERO SECTION ===== -->
 <section class="hero-visual py-4 d-flex align-items-center justify-content-center">
+    <canvas id="hero-canvas"></canvas>
+
     <div class="container py-3 text-center" data-aos="zoom-out">
-        <label class="px-3 py-1 mb-4 fw-bold text-uppercase ls-wide badge-gradient rounded-1"
-            style="font-size: 0.75rem;">
-            <i class="bi bi-building me-2"></i>Smart City Information & Issue Reporting
-        </label>
-        <!-- ===== HERO TYPEWRITER STYLES (hero section only) ===== -->
-        <style>
-            /* Cursor rendered as ::after on the actively-typing span */
-            .hero-typing::after {
-                content: '';
-                display: inline-block;
-                width: 3px;
-                height: 0.82em;
-                background: currentColor;
-                margin-left: 3px;
-                border-radius: 2px;
-                vertical-align: text-bottom;
-                animation: hero-blink 0.75s steps(1) infinite;
-            }
 
-            @keyframes hero-blink {
+        <!-- Badge -->
+        <div class="hero-badge mx-auto d-inline-flex mb-4">
+            <span class="dot"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="me-1" viewBox="0 0 16 16"><path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/><path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1z"/></svg>Smart City Information &amp; Issue Reporting
+        </div>
 
-                0%,
-                100% {
-                    opacity: 1;
-                }
-
-                50% {
-                    opacity: 0;
-                }
-            }
-        </style>
-
-        <h1 class="fw-bolder mb-4"
-            style="font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 0.95; letter-spacing: -0.06em; color: #0f172a;">
+        <!-- Headline with typewriter -->
+        <h1 class="hero-headline fw-bolder mb-4">
             <span id="hero-line1"></span><br>
-            <span class="gradient-brand-text"><span id="hero-line2"></span></span>
+            <span class="accent-word"><span id="hero-line2"></span></span>
         </h1>
 
-        <!-- ===== HERO TYPEWRITER SCRIPT (hero section only) ===== -->
-        <script>
-            (function () {
-                var line1 = 'Your City,';
-                var line2 = 'Your Voice.';
-                var el1 = document.getElementById('hero-line1');
-                var el2 = document.getElementById('hero-line2');
-                var delay = 60; // ms per character
-
-                function typeText(el, text, onDone) {
-                    el.classList.add('hero-typing'); // show cursor on this element
-                    var i = 0;
-                    function next() {
-                        if (i < text.length) {
-                            el.textContent += text.charAt(i);
-                            i++;
-                            setTimeout(next, delay);
-                        } else {
-                            el.classList.remove('hero-typing'); // hide cursor when done
-                            if (onDone) onDone();
-                        }
-                    }
-                    next();
-                }
-
-                // Start after a short initial pause
-                setTimeout(function () {
-                    typeText(el1, line1, function () {
-                        setTimeout(function () {
-                            typeText(el2, line2, null); // null = no callback, cursor gone
-                        }, 200);
-                    });
-                }, 300);
-            })();
-        </script>
-        <p class="mb-5 mx-auto text-secondary lh-relaxed"
-            style="max-width: 800px; font-size: 1.4rem; font-weight: 500;">
-            Find accurate information about city services and report civic issues like road damage or water problems.
+        <p class="mb-5 mx-auto text-secondary lh-relaxed" style="max-width:760px;font-size:1.25rem;font-weight:500;">
+            Find accurate information about city services and report civic issues
+            like road damage or water problems with ease.
             Authorities track and resolve your reports with full transparency.
         </p>
-        <div class="d-flex flex-wrap justify-content-center gap-4 mb-5" data-aos="fade-up" data-aos-delay="200">
+
+        <!-- CTA Buttons -->
+        <div class="d-flex flex-wrap justify-content-center gap-3 mb-5" data-aos="fade-up" data-aos-delay="150">
             {% if user.is_authenticated %}
-            <a href="{% url 'service_list' %}" class="btn-pill btn-primary-pill text-decoration-none shadow-lg px-5">
-                Browse Services
+            <a href="{% url 'service_list' %}" class="btn-pill btn-gradient text-decoration-none shadow-lg px-5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="me-2" viewBox="0 0 16 16"><path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/><path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1z"/></svg>Browse Services
             </a>
             <a href="{% url 'issue_create' %}" class="btn-pill btn-outline-pill text-decoration-none px-5">
-                Report an Issue
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="me-2" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>Report an Issue
             </a>
             {% else %}
             <a href="{% url 'signup' %}" class="btn-pill btn-gradient text-decoration-none shadow-lg px-5">
-                Sign Up for Free
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="me-2" viewBox="0 0 16 16"><path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/><path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/></svg>Sign Up for Free
             </a>
             <a href="{% url 'login' %}" class="btn-pill btn-outline-pill text-decoration-none px-5">
-                Sign In
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="me-2" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/><path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/></svg>Sign In
             </a>
             {% endif %}
         </div>
-        <div class="d-flex justify-content-center align-items-center gap-5 text-muted small fw-bold opacity-75"
-            data-aos="fade-up" data-aos-delay="400">
-            <span><i class="bi bi-geo-alt-fill text-primary me-2"></i>Service Directory</span>
+
+        <!-- Trust pills -->
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 text-muted small fw-bold opacity-75"
+            data-aos="fade-up" data-aos-delay="300">
+            <span><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="text-primary me-1" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>Service Directory</span>
             <span class="vr"></span>
-            <span><i class="bi bi-exclamation-triangle-fill text-primary me-2"></i>Issue Reporting</span>
+            <span><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="text-primary me-1" viewBox="0 0 16 16"><path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>Issue Reporting</span>
             <span class="vr"></span>
-            <span><i class="bi bi-bar-chart-fill text-primary me-2"></i>Status Tracking</span>
+            <span><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="text-primary me-1" viewBox="0 0 16 16"><path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/></svg>Status Tracking</span>
+        </div>
+
+        <!-- Scroll cue -->
+        <div class="mt-5 scroll-arrow text-muted" style="font-size:1.5rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="opacity-40" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/><path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
         </div>
     </div>
 </section>
 
-<!-- ===== DASHBOARD STATS BAND ===== -->
-<section class="py-5 border-top border-bottom bg-white overflow-hidden shadow-sm">
-    <div class="container">
-        <div class="row g-0 text-center">
-            <div class="col-6 col-lg-3 impact-stat-item" data-aos="fade-right" data-aos-delay="100">
-                <span class="stat-value">10k+</span>
-                <span class="stat-label">Registered Citizens</span>
+<!-- ===== STATS SECTION ===== -->
+<section class="stats-band py-5">
+    <div class="container py-2">
+        <div class="row g-4 justify-content-center">
+
+            <!-- Registered Citizens -->
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="80">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/><path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg></div>
+                    <span class="stat-num counter" data-target="10000">0</span>
+                    <span class="stat-lbl">Registered Citizens</span>
+                </div>
             </div>
-            <div class="col-6 col-lg-3 impact-stat-item" data-aos="fade-right" data-aos-delay="200">
-                <span class="stat-value">50+</span>
-                <span class="stat-label">City Services</span>
+
+            <!-- City Services -->
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="160">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514z"/><path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-3a1 1 0 0 1 1-1h1.5a.5.5 0 0 1 0 1H7v3h1.5a.5.5 0 0 1 0 1H3a1 1 0 0 1-1-1V1z"/><path d="M4.5 4a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zm0 2a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3z"/></svg></div>
+                    <span class="stat-num counter" data-target="50">0</span>
+                    <span class="stat-lbl">City Services</span>
+                </div>
             </div>
-            <div class="col-6 col-lg-3 impact-stat-item" data-aos="fade-left" data-aos-delay="300">
-                <span class="stat-value">95%</span>
-                <span class="stat-label">Issues Resolved</span>
+
+            <!-- Issues Resolved -->
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="240">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/></svg></div>
+                    <span class="stat-num">95%</span>
+                    <span class="stat-lbl">Issues Resolved</span>
+                </div>
             </div>
-            <div class="col-6 col-lg-3 impact-stat-item" data-aos="fade-left" data-aos-delay="400">
-                <span class="stat-value">48h</span>
-                <span class="stat-label">Avg Response Time</span>
+
+            <!-- Avg Response Time -->
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="320">
+                <div class="stat-card">
+                    <div class="stat-icon-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16"><path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/><path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/><path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302z"/></svg></div>
+                    <span class="stat-num counter" data-target="48" data-suffix="h">0</span>
+                    <span class="stat-lbl">Avg Response Time</span>
+                </div>
             </div>
+
         </div>
     </div>
 </section>
 
-<!-- ===== CORE CAPABILITIES (3x2 GRID) ===== -->
+<!-- ===== CITY SERVICE DIRECTORY ===== -->
 <section id="services" class="py-8 bg-white">
     <div class="container">
-        <div class="text-center mb-6" data-aos="fade-up">
-            <h2 class="fw-bold display-4 mb-3" style="letter-spacing: -0.03em;">City Service Directory</h2>
-            <p class="text-muted fs-5 mx-auto" style="max-width: 650px;">Browse all public services offered by city
-                departments. Find what you need quickly and easily.</p>
+        <div class="text-center mb-5" data-aos="fade-up">
+            <div class="section-label mx-auto"><span class="section-label-dot"></span>Services</div>
+            <h2 class="fw-bold display-4 mb-3" style="letter-spacing:-0.03em;">City Service Directory</h2>
+            <p class="text-muted fs-5 mx-auto" style="max-width:600px;">
+                Browse all public services offered by city departments. Find what you need quickly and easily.
+            </p>
         </div>
+
         <div class="row g-4">
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <!-- Water -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="80">
                 <div class="feature-card">
-                    <div class="icon-box"><i class="bi bi-droplet-half"></i></div>
+                    <div class="icon-box icon-water"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16"><path d="M7.21 0a.5.5 0 0 1 .58 0l5.653 8.309a3.909 3.909 0 0 1 .287 2.817 4.003 4.003 0 0 1-1.977 2.479A4.063 4.063 0 0 1 8 14a4.063 4.063 0 0 1-3.753-2.395 3.909 3.909 0 0 1 .287-2.817L7.21 0zM8 1.783 2.978 8.75A2.912 2.912 0 0 0 2.77 10.84a3.003 3.003 0 0 0 5.23 2.16V1.783z"/></svg></div>
                     <h5 class="fw-bold mb-3">Water Supply</h5>
-                    <p class="text-muted small lh-relaxed">Information on water supply schedules, pipeline maintenance,
-                        and reporting water leakage or contamination issues.</p>
+                    <p class="text-muted small lh-relaxed">
+                        Information on water supply schedules, pipeline maintenance, and reporting water leakage or
+                        contamination issues.
+                    </p>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <!-- Roads -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="150">
                 <div class="feature-card">
-                    <div class="icon-box"><i class="bi bi-signpost-split"></i></div>
-                    <h5 class="fw-bold mb-3">Roads & Infrastructure</h5>
-                    <p class="text-muted small lh-relaxed">Report potholes, damaged roads, broken streetlights, or other
-                        infrastructure problems in your area directly to authorities.</p>
+                    <div class="icon-box icon-road"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16"><path d="M7 7V1.414a1 1 0 0 1 2 0V2h5a1 1 0 0 1 .8.4l.975 1.3a.5.5 0 0 1 0 .6L14.8 5.6a1 1 0 0 1-.8.4H9v10H7v-5H2a1 1 0 0 1-.8-.4L.225 9.3a.5.5 0 0 1 0-.6L1.2 7.4A1 1 0 0 1 2 7h5z"/></svg></div>
+                    <h5 class="fw-bold mb-3">Roads &amp; Infrastructure</h5>
+                    <p class="text-muted small lh-relaxed">
+                        Report potholes, damaged roads, broken streetlights, or other infrastructure problems in your
+                        area directly to authorities.
+                    </p>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+            <!-- Waste -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="220">
                 <div class="feature-card">
-                    <div class="icon-box"><i class="bi bi-trash3"></i></div>
+                    <div class="icon-box icon-waste"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16"><path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/></svg></div>
                     <h5 class="fw-bold mb-3">Waste Management</h5>
-                    <p class="text-muted small lh-relaxed">Access garbage collection schedules and report missed
-                        pickups, illegal dumping, or sanitation concerns in your locality.</p>
+                    <p class="text-muted small lh-relaxed">
+                        Access garbage collection schedules and report missed pickups, illegal dumping, or sanitation
+                        concerns in your locality.
+                    </p>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+            <!-- Electricity -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="290">
                 <div class="feature-card">
-                    <div class="icon-box"><i class="bi bi-lightning-charge"></i></div>
+                    <div class="icon-box icon-electric"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16"><path d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/></svg></div>
                     <h5 class="fw-bold mb-3">Electricity</h5>
-                    <p class="text-muted small lh-relaxed">View electricity outage schedules, report power failures, and
-                        stay updated on maintenance activities in your area.</p>
+                    <p class="text-muted small lh-relaxed">
+                        View electricity outage schedules, report power failures, and stay updated on maintenance
+                        activities in your area.
+                    </p>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
+            <!-- Parks -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="360">
                 <div class="feature-card">
-                    <div class="icon-box"><i class="bi bi-tree-fill"></i></div>
-                    <h5 class="fw-bold mb-3">Parks & Public Spaces</h5>
-                    <p class="text-muted small lh-relaxed">Find information about public parks, playgrounds, and
-                        community spaces. Report maintenance issues or suggest improvements.</p>
+                    <div class="icon-box icon-parks"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16"><path d="M8.416.223a.5.5 0 0 0-.832 0l-3 4.5A.5.5 0 0 0 5 5.5h.098L3.076 8.735A.5.5 0 0 0 3.5 9.5h.191l-1.638 3.276a.5.5 0 0 0 .447.724H7V16h2v-2.5h4.5a.5.5 0 0 0 .447-.724L12.31 9.5h.191a.5.5 0 0 0 .424-.765L10.902 5.5H11a.5.5 0 0 0 .416-.777l-3-4.5z"/></svg></div>
+                    <h5 class="fw-bold mb-3">Parks &amp; Public Spaces</h5>
+                    <p class="text-muted small lh-relaxed">
+                        Find information about public parks, playgrounds, and community spaces. Report maintenance
+                        issues or suggest improvements.
+                    </p>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="600">
+            <!-- Safety -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="430">
                 <div class="feature-card">
-                    <div class="icon-box"><i class="bi bi-shield-check"></i></div>
+                    <div class="icon-box icon-safety"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16"><path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/><path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/></svg></div>
                     <h5 class="fw-bold mb-3">Public Safety</h5>
-                    <p class="text-muted small lh-relaxed">Report safety hazards, broken traffic signals, missing
-                        signage, or other public safety concerns to get them resolved quickly.</p>
+                    <p class="text-muted small lh-relaxed">
+                        Report safety hazards, broken traffic signals, missing signage, or other public safety concerns
+                        to get them resolved quickly.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== OPERATIONAL EXCELLENCE & KPI TRACKER ===== -->
+<!-- ===== HOW IT WORKS ===== -->
 <section id="how-it-works" class="py-8"
-    style="background-color: #f8fafc; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9;">
+    style="background:linear-gradient(135deg,#f8faff 0%,#eff6ff 100%);border-top:1px solid #e0eaff;border-bottom:1px solid #e0eaff;">
     <div class="container">
         <div class="row align-items-center g-5">
+
+            <!-- Left: Timeline -->
             <div class="col-lg-5" data-aos="fade-right">
-                <h2 class="fw-bold display-5 mb-4" style="letter-spacing: -0.03em;">How It<br>Works</h2>
-                <p class="text-muted fs-5 mb-5 lh-relaxed">Our simple 3-step process ensures that every civic issue you
-                    report is tracked, assigned to the right department, and resolved with full transparency.</p>
+                <div class="section-label mb-2"><span class="section-label-dot"></span>Process</div>
+                <h2 class="fw-bold display-5 mb-4" style="letter-spacing:-0.03em;">How It<br>Works</h2>
+                <p class="text-muted fs-5 mb-5 lh-relaxed">
+                    Our simple 3-step process ensures that every civic issue you report is tracked, assigned to the
+                    right department, and resolved with full transparency.
+                </p>
 
                 <div class="timeline-container">
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
                         <div class="timeline-marker"></div>
                         <div class="timeline-content">
-                            <h5 class="fw-bold mb-2">Register & Sign In</h5>
+                            <h5 class="fw-bold mb-2">
+                                <span class="badge"
+                                    style="background:linear-gradient(135deg,#1d4ed8,#06b6d4);color:#fff;margin-right:.5rem;font-size:.75rem;">01</span>
+                                Register &amp; Sign In
+                            </h5>
                             <p class="text-muted small">Create your citizen account with a simple sign-up. Once logged
                                 in, you can access all city services and report issues.</p>
                         </div>
@@ -220,7 +643,11 @@
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
                         <div class="timeline-marker"></div>
                         <div class="timeline-content">
-                            <h5 class="fw-bold mb-2">Report an Issue</h5>
+                            <h5 class="fw-bold mb-2">
+                                <span class="badge"
+                                    style="background:linear-gradient(135deg,#0369a1,#06b6d4);color:#fff;margin-right:.5rem;font-size:.75rem;">02</span>
+                                Report an Issue
+                            </h5>
                             <p class="text-muted small">Describe the problem — road damage, water leakage, broken
                                 streetlight — select a category and submit. It's that easy.</p>
                         </div>
@@ -228,7 +655,11 @@
                     <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
                         <div class="timeline-marker"></div>
                         <div class="timeline-content">
-                            <h5 class="fw-bold mb-2">Track & Get Resolved</h5>
+                            <h5 class="fw-bold mb-2">
+                                <span class="badge"
+                                    style="background:linear-gradient(135deg,#059669,#10b981);color:#fff;margin-right:.5rem;font-size:.75rem;">03</span>
+                                Track &amp; Get Resolved
+                            </h5>
                             <p class="text-muted small">Your issue is assigned to the right city department. Track its
                                 status in real-time until it's fully resolved by the admin.</p>
                         </div>
@@ -236,53 +667,58 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 offset-lg-1" data-aos="fade-left">
-                <div class="p-5 bg-white border border-2 rounded-5 shadow-2">
-                    <div class="d-flex justify-content-between align-items-center mb-5">
-                        <h4 class="fw-bold m-0 text-dark">Issue Tracking Dashboard</h4>
-                        <span class="badge badge-gradient rounded-pill fs-7">
-                            <i class="bi bi-broadcast me-2"></i>Live Status
-                        </span>
+            <!-- Right: Live Dashboard Mock -->
+            <div class="col-lg-6 offset-lg-1" data-aos="fade-left" data-aos-delay="100">
+                <div class="tracking-mock">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold m-0 text-dark">Issue Tracking Dashboard</h5>
+                        <span class="live-badge"><span class="live-dot"></span>Live Status</span>
                     </div>
 
-                    <div class="mb-5">
-                        <div class="d-flex justify-content-between mb-3">
-                            <span class="fw-bold text-secondary text-uppercase ls-wide fs-7">Issues
+                    <!-- Progress row 1 -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold text-muted"
+                                style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;">Issues
                                 Reported</span>
-                            <span class="text-primary fw-bold fs-5">2,847</span>
+                            <span class="fw-bold" style="color:#1d4ed8;font-size:1.05rem;">2,847</span>
                         </div>
-                        <div class="progress" style="height: 8px; border-radius: 20px; background: #f1f5f9;">
-                            <div class="progress-bar bg-primary" role="progressbar"
-                                style="width: 88%; border-radius: 20px;"></div>
-                        </div>
-                    </div>
-
-                    <div class="mb-5">
-                        <div class="d-flex justify-content-between mb-3">
-                            <span class="fw-bold text-secondary text-uppercase ls-wide fs-7">Citizen Satisfaction</span>
-                            <span class="text-success fw-bold fs-5">4.7/5.0</span>
-                        </div>
-                        <div class="progress" style="height: 8px; border-radius: 20px; background: #f1f5f9;">
-                            <div class="progress-bar bg-success" role="progressbar"
-                                style="width: 94%; border-radius: 20px;"></div>
+                        <div class="progress" style="height:8px;border-radius:20px;">
+                            <div class="progress-bar progress-animated" role="progressbar"
+                                style="width:0%;border-radius:20px;" data-width="88%" aria-valuenow="88"
+                                aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
 
-                    <div class="bg-light p-4 rounded-4 border border-1 border-opacity-50">
-                        <div class="d-flex align-items-start mb-3">
-                            <i class="bi bi-check-circle-fill text-success fs-5 me-3"></i>
-                            <span class="text-muted small fw-medium">Road repair completed on MG Road, Ward 12.</span>
+                    <!-- Progress row 2 -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold text-muted"
+                                style="font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;">Citizen
+                                Satisfaction</span>
+                            <span class="fw-bold" style="color:#059669;font-size:1.05rem;">4.7/5.0</span>
                         </div>
-                        <div class="d-flex align-items-start mb-3">
-                            <i class="bi bi-arrow-repeat text-primary fs-5 me-3"></i>
-                            <span class="text-muted small fw-medium">Water pipeline leak in Sector 5 — assigned to
-                                maintenance team.</span>
+                        <div class="progress" style="height:8px;border-radius:20px;">
+                            <div class="progress-bar bg-success progress-animated" role="progressbar"
+                                style="width:0%;border-radius:20px;" data-width="94%" aria-valuenow="94"
+                                aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="d-flex align-items-start">
-                            <i class="bi bi-exclamation-circle text-warning fs-5 me-3"></i>
-                            <span class="text-muted small fw-medium">New issue reported: Broken streetlight near Central
-                                Park.</span>
-                        </div>
+                    </div>
+
+                    <!-- Activity log -->
+                    <div class="activity-row">
+                        <div class="activity-icon resolved"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022z"/></svg></div>
+                        <span class="text-muted small fw-medium">Road repair completed on MG Road, Ward 12.</span>
+                    </div>
+                    <div class="activity-row">
+                        <div class="activity-icon in-progress"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/></svg></div>
+                        <span class="text-muted small fw-medium">Water pipeline leak in Sector 5 — assigned to
+                            maintenance team.</span>
+                    </div>
+                    <div class="activity-row">
+                        <div class="activity-icon new"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/></svg></div>
+                        <span class="text-muted small fw-medium">New issue reported: Broken streetlight near Central
+                            Park.</span>
                     </div>
                 </div>
             </div>
@@ -290,120 +726,135 @@
     </div>
 </section>
 
-<!-- ===== CITY PULSE & UPDATES ===== -->
+<!-- ===== LATEST UPDATES ===== -->
 <section id="updates" class="py-8 bg-white" data-aos="fade-up">
     <div class="container">
-        <div class="d-flex justify-content-between align-items-end mb-6">
+        <div class="d-flex justify-content-between align-items-end mb-5">
             <div>
-                <h2 class="fw-bold display-5 mb-2" style="letter-spacing: -0.03em;">Latest Updates</h2>
+                <div class="section-label mb-2"><span class="section-label-dot"></span>Updates</div>
+                <h2 class="fw-bold display-5 mb-1" style="letter-spacing:-0.03em;">Latest Updates</h2>
                 <p class="text-muted fs-5 m-0">Stay informed about recent improvements and resolved issues in your city.
                 </p>
             </div>
             <a href="#"
-                class="text-primary fw-bold text-decoration-none border-bottom border-primary border-2 pb-1">View
-                All</a>
+                class="text-primary fw-bold text-decoration-none border-bottom border-primary border-2 pb-1 d-none d-md-inline">View
+                All →</a>
         </div>
-        <div class="row g-5">
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="news-card">
-                    <span class="news-tag">Roads</span>
+
+        <div class="row g-4">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="80">
+                <div class="news-card news-card-roads">
+                    <span class="news-tag"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="me-1" viewBox="0 0 16 16"><path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057z"/></svg>Roads</span>
                     <h5 class="fw-bold mb-3 lh-base">Major Potholes Fixed on NH-44</h5>
                     <p class="text-muted small mb-4">Following citizen reports, the Roads department completed pothole
-                        repair work on a 5km stretch of NH-44, improving commuter safety...</p>
-                    <a href="#" class="btn btn-link p-0 text-primary text-decoration-none fw-bold small">Read More</a>
+                        repair work on a 5km stretch of NH-44, improving commuter safety significantly...</p>
+                    <a href="#" class="text-primary fw-bold small text-decoration-none">Read More <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/></svg></a>
                 </div>
             </div>
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="news-card">
-                    <span class="news-tag">Water Supply</span>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="160">
+                <div class="news-card news-card-water">
+                    <span class="news-tag"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="me-1" viewBox="0 0 16 16"><path d="M8 16a6 6 0 0 0 6-6c0-1.655-1.122-2.904-2.432-4.362C10.254 4.176 8.75 2.503 8 0c0 0-6 5.686-6 10a6 6 0 0 0 6 6zM6.646 4.646l.708.708c-.29.29-1.128 1.311-1.907 2.87l-.894-.448c.82-1.641 1.717-2.753 2.093-3.13z"/></svg>Water Supply</span>
                     <h5 class="fw-bold mb-3 lh-base">New Water Pipeline in Ward 8</h5>
                     <p class="text-muted small mb-4">A new water distribution pipeline has been laid in Ward 8,
                         resolving years of intermittent water supply issues raised by residents...</p>
-                    <a href="#" class="btn btn-link p-0 text-primary text-decoration-none fw-bold small">Read More</a>
+                    <a href="#" class="text-primary fw-bold small text-decoration-none">Read More <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/></svg></a>
                 </div>
             </div>
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="news-card">
-                    <span class="news-tag">Public Safety</span>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="240">
+                <div class="news-card news-card-safety">
+                    <span class="news-tag"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="me-1" viewBox="0 0 16 16"><path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1z"/></svg>Public Safety</span>
                     <h5 class="fw-bold mb-3 lh-base">200+ Streetlights Restored</h5>
                     <p class="text-muted small mb-4">Thanks to citizen issue reports, over 200 non-functioning
                         streetlights across 12 wards have been repaired, improving night safety...</p>
-                    <a href="#" class="btn btn-link p-0 text-primary text-decoration-none fw-bold small">Read More</a>
+                    <a href="#" class="text-primary fw-bold small text-decoration-none">Read More <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/></svg></a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== FINAL CALL TO ACTION ===== -->
+<!-- ===== CALL TO ACTION ===== -->
 <section id="contact" class="py-8 bg-white border-top border-bottom">
     <div class="container text-center">
         <div class="p-5 p-lg-6 rounded-5 cta-enterprise-box" data-aos="zoom-in">
             <div class="cta-mesh-overlay"></div>
-
             <div class="position-absolute top-0 end-0 p-5 opacity-10">
-                <i class="bi bi-buildings text-white" style="font-size: 15rem;"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" fill="currentColor" class="text-white opacity-10" viewBox="0 0 16 16"><path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z"/><path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1z"/></svg>
             </div>
-
             <div class="position-relative py-5">
-                <h2 class="fw-bold display-4 mb-4 text-white" style="letter-spacing: -0.04em;">Make Your City Better
-                </h2>
-                <p class="fs-4 mb-5 cta-subtext mx-auto">
-                    Join thousands of citizens who are reporting issues and helping improve city services. Your voice
-                    matters — sign up today and make a difference.
+                <div class="section-label mx-auto mb-3"
+                    style="background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2);color:rgba(186,230,253,0.95);">
+                    <span
+                        style="width:6px;height:6px;border-radius:50%;background:#06b6d4;display:inline-block;"></span>
+                    Get Started Today
+                </div>
+                <h2 class="fw-bold display-4 mb-4 text-white" style="letter-spacing:-0.04em;">Make Your City Better</h2>
+                <p class="fs-5 mb-5 cta-subtext mx-auto">
+                    Join thousands of citizens who are reporting issues and helping improve city services.
+                    Your voice matters — sign up today and make a difference.
                 </p>
 
                 {% if not user.is_authenticated %}
-                <div class="d-flex flex-wrap justify-content-center gap-4">
-                    <a href="{% url 'signup' %}" class="btn-gradient px-5 py-3 text-decoration-none rounded-4 fw-bold">
-                        <span>Sign Up for Free</span>
-                        <i class="bi bi-arrow-right-circle-fill ms-2"></i>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="{% url 'signup' %}" class="btn-cta-premium text-decoration-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/><path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/></svg><span>Sign Up for Free</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ms-1" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm.5-10a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V13a.5.5 0 0 0 1 0V9.5H12a.5.5 0 0 0 0-1H8.5V5z"/></svg>
+                    </a>
+                    <a href="{% url 'login' %}" class="text-decoration-none px-5 py-3 fw-bold rounded-4"
+                        style="background:rgba(255,255,255,0.10);color:#fff;border:1.5px solid rgba(255,255,255,0.25);transition:all .3s ease;"
+                        onmouseover="this.style.background='rgba(255,255,255,0.18)'"
+                        onmouseout="this.style.background='rgba(255,255,255,0.10)'">
+                        Sign In
                     </a>
                 </div>
                 {% else %}
-                <div class="d-flex flex-wrap justify-content-center gap-4">
+                <div class="d-flex flex-wrap justify-content-center gap-3">
                     <a href="{% url 'issue_create' %}" class="btn-cta-premium text-decoration-none">
-                        <span>Report an Issue</span>
-                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg><span>Report an Issue</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ms-1" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm.5-10a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V13a.5.5 0 0 0 1 0V9.5H12a.5.5 0 0 0 0-1H8.5V5z"/></svg>
                     </a>
                 </div>
                 {% endif %}
 
-                <div class="mt-5 d-flex justify-content-center align-items-center gap-4 text-white small fw-bold">
-                    <span><i class="bi bi-person-check me-2"></i>CITIZEN ROLE</span>
+                <div
+                    class="mt-5 d-flex flex-wrap justify-content-center align-items-center gap-4 text-white small fw-bold opacity-75">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="me-2" viewBox="0 0 16 16"><path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/><path fill-rule="evenodd" d="M12.146 5.146a.5.5 0 0 1 .708 0l1.5 1.5a.5.5 0 0 1-.708.708L13 6.707V8.5a.5.5 0 0 1-1 0V6.707l-.646.647a.5.5 0 1 1-.708-.708l1.5-1.5z"/></svg>CITIZEN ROLE</span>
                     <span class="vr"></span>
-                    <span><i class="bi bi-gear me-2"></i>ADMIN ROLE</span>
+                    <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="me-2" viewBox="0 0 16 16"><path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/><path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/></svg>ADMIN ROLE</span>
                     <span class="vr"></span>
-                    <span><i class="bi bi-clipboard-data me-2"></i>REAL-TIME TRACKING</span>
+                    <span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="me-2" viewBox="0 0 16 16"><path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5z"/><path d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585c.055.156.085.325.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5c0-.175.03-.344.085-.5zM10 7H6a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1zm-1 3H6a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1zm-4 3H6a.5.5 0 0 1 0-1h-.5a.5.5 0 0 1 0 1z"/><path d="M9.5 9a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm0 .5a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM8.5 11l1.5-1.5"/></svg>REAL-TIME TRACKING</span>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== FOOTER SECTION ===== -->
+<!-- ===== FOOTER ===== -->
 <footer class="footer-professional">
     <div class="container">
         <div class="row g-5">
+            <!-- Brand col -->
             <div class="col-lg-4">
-                <a class="navbar-brand fw-bold d-flex align-items-center mb-4" href="{% url 'home' %}">
-                    <img src="{% static 'css/images/pfsd_logo.png' %}" alt="CivicFlow Logo" class="brand-logo-img me-3"
-                        style="height: 50px;">
-                    <span class="gradient-brand-text" style="font-size: 1.7rem;">Smart City Portal</span>
+                <a class="navbar-brand d-flex align-items-center mb-4" href="{% url 'home' %}">
+                    <img src="{% static 'css/images/pfsd_logo.png' %}" alt="Smart City Portal Logo"
+                        class="brand-logo-img me-3">
+                    <span class="gradient-brand-text" style="font-size:1.6rem;">Smart City Portal</span>
                 </a>
-                <p class="text-secondary small lh-relaxed pe-lg-5 mb-5">
-                    A platform for citizens to find city service information and report civic issues. Authorities can
-                    track and update issue status for complete transparency.
+                <p class="text-secondary small lh-relaxed pe-lg-4 mb-5">
+                    A platform for citizens to find city service information and report civic issues.
+                    Authorities can track and update issue status for complete transparency.
                 </p>
                 <div class="d-flex gap-3">
-                    <a href="#" class="social-icon-wrapper"><i class="bi bi-twitter-x"></i></a>
-                    <a href="#" class="social-icon-wrapper"><i class="bi bi-meta"></i></a>
-                    <a href="#" class="social-icon-wrapper"><i class="bi bi-linkedin"></i></a>
-                    <a href="#" class="social-icon-wrapper"><i class="bi bi-youtube"></i></a>
+                    <a href="#" class="social-icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/></svg></a>
+                    <a href="#" class="social-icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.075 1.197c-1.79.052-3.42.602-4.77 1.514C1.568 4.003.5 6.023.5 8.27c0 3.2 2.056 5.93 4.929 6.9.36.062.49-.156.49-.346V13.5c-2.002.438-2.423-1.01-2.423-1.01-.327-.832-.8-1.054-.8-1.054-.653-.448.05-.44.05-.44.722.05 1.102.742 1.102.742.642 1.099 1.685.782 2.095.598.065-.464.25-.782.456-.962-1.598-.18-3.277-.8-3.277-3.56 0-.787.28-1.43.742-1.935-.075-.182-.32-.916.07-1.907 0 0 .605-.193 1.98.74A6.88 6.88 0 0 1 8 5.42c.613.003 1.229.082 1.806.24 1.373-.933 1.977-.74 1.977-.74.39.991.144 1.725.07 1.907.46.505.74 1.148.74 1.934 0 2.768-1.683 3.378-3.286 3.554.258.224.492.666.492 1.342v1.99c0 .19.13.413.494.343C13.444 14.197 15.5 11.47 15.5 8.27c0-3.87-3.135-7.073-7.425-7.073z"/></svg></a>
+                    <a href="#" class="social-icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg></a>
+                    <a href="#" class="social-icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408z"/></svg></a>
                 </div>
             </div>
+
+            <!-- Quick Links -->
             <div class="col-6 col-lg-2 offset-lg-1">
-                <h6 class="fw-bold mb-4 text-dark text-uppercase ls-wide fs-7">Quick Links</h6>
+                <h6 class="fw-bold mb-4 text-uppercase ls-wide fs-7" style="color:#94a3b8;">Quick Links</h6>
                 <ul class="footer-link-list">
                     <li class="footer-link-item"><a href="{% url 'home' %}" class="footer-link">Home</a></li>
                     <li class="footer-link-item"><a href="{% url 'service_list' %}" class="footer-link">City
@@ -413,8 +864,10 @@
                     <li class="footer-link-item"><a href="#how-it-works" class="footer-link">How It Works</a></li>
                 </ul>
             </div>
+
+            <!-- Roles -->
             <div class="col-6 col-lg-2">
-                <h6 class="fw-bold mb-4 text-dark text-uppercase ls-wide fs-7">Roles</h6>
+                <h6 class="fw-bold mb-4 text-uppercase ls-wide fs-7" style="color:#94a3b8;">Roles</h6>
                 <ul class="footer-link-list">
                     <li class="footer-link-item"><a href="{% url 'signup' %}" class="footer-link">Citizen (User)</a>
                     </li>
@@ -425,39 +878,44 @@
                     </li>
                 </ul>
             </div>
+
+            <!-- Contact -->
             <div class="col-lg-3">
-                <h6 class="fw-bold mb-4 text-dark text-uppercase ls-wide fs-7">Contact Us</h6>
-                <p class="text-muted small mb-4">Reach out for help or feedback about city services.</p>
+                <h6 class="fw-bold mb-4 text-uppercase ls-wide fs-7" style="color:#94a3b8;">Contact Us</h6>
+                <p class="small mb-4" style="color:rgba(148,163,184,.8);">Reach out for help or feedback about city
+                    services.</p>
                 <div class="footer-contact-item">
-                    <div class="footer-contact-icon"><i class="bi bi-telephone"></i></div>
+                    <div class="footer-contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/></svg></div>
                     <div>
-                        <div class="small text-muted">Helpline</div>
-                        <div class="fw-bold text-dark">+91 1234567890 </div>
+                        <div class="small" style="color:#64748b;">Helpline</div>
+                        <div class="fw-bold" style="color:#f1f5f9;">+91 1234567890</div>
                     </div>
                 </div>
                 <div class="footer-contact-item">
-                    <div class="footer-contact-icon"><i class="bi bi-envelope"></i></div>
+                    <div class="footer-contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/></svg></div>
                     <div>
-                        <div class="small text-muted">Email Support</div>
-                        <div class="fw-bold text-dark">smartcity@gmail.com</div>
+                        <div class="small" style="color:#64748b;">Email Support</div>
+                        <div class="fw-bold" style="color:#f1f5f9;">smartcity@gmail.com</div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Footer bottom -->
         <div class="footer-bottom">
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <span class="small text-muted">&copy; 2025 Smart City Portal,PS17 SDP Project. All rights
-                        reserved.</span>
+                    <span class="small" style="color:rgba(100,116,139,.8);">&copy; 2025 Smart City Portal, PS17 SDP
+                        Project. All rights reserved.</span>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <div class="d-flex gap-4 justify-content-center justify-content-md-end">
-                        <a href="{% url 'compliance' %}" class="text-decoration-none text-muted small">Compliance</a>
-                        <a href="{% url 'privacy_policy' %}" class="text-decoration-none text-muted small">Privacy
-                            Policy</a>
-                        <a href="{% url 'terms_of_service' %}" class="text-decoration-none text-muted small">Terms of
-                            Service</a>
+                        <a href="{% url 'compliance' %}" class="text-decoration-none small"
+                            style="color:rgba(100,116,139,.8);">Compliance</a>
+                        <a href="{% url 'privacy_policy' %}" class="text-decoration-none small"
+                            style="color:rgba(100,116,139,.8);">Privacy Policy</a>
+                        <a href="{% url 'terms_of_service' %}" class="text-decoration-none small"
+                            style="color:rgba(100,116,139,.8);">Terms of Service</a>
                     </div>
                 </div>
             </div>
@@ -465,4 +923,167 @@
     </div>
 </footer>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    /* =================================
+       HERO TYPEWRITER
+    ================================= */
+    (function () {
+        var line1 = 'Your City,';
+        var line2 = 'Your Voice.';
+        var el1 = document.getElementById('hero-line1');
+        var el2 = document.getElementById('hero-line2');
+        var delay = 58;
+
+        function typeText(el, text, onDone) {
+            el.classList.add('hero-typing');
+            var i = 0;
+            function next() {
+                if (i < text.length) {
+                    el.textContent += text.charAt(i++);
+                    setTimeout(next, delay);
+                } else {
+                    el.classList.remove('hero-typing');
+                    if (onDone) onDone();
+                }
+            }
+            next();
+        }
+        setTimeout(function () {
+            typeText(el1, line1, function () {
+                setTimeout(function () { typeText(el2, line2, null); }, 180);
+            });
+        }, 350);
+    })();
+
+    /* =================================
+       PARTICLE CANVAS (hero background)
+    ================================= */
+    (function () {
+        var canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var W, H, particles = [];
+
+        function seed() {
+            particles = [];
+            var TOTAL = 80;
+            var colors = [
+                'rgba(29,78,216,',
+                'rgba(6,182,212,',
+                'rgba(99,102,241,'
+            ];
+            for (var i = 0; i < TOTAL; i++) {
+                particles.push({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    r: Math.random() * 2.8 + 0.7,
+                    dx: (Math.random() - 0.5) * 0.38,
+                    dy: (Math.random() - 0.5) * 0.38,
+                    alpha: Math.random() * 0.38 + 0.10,
+                    color: colors[Math.floor(Math.random() * colors.length)]
+                });
+            }
+        }
+
+        function resize() {
+            var rect = canvas.parentElement.getBoundingClientRect();
+            W = canvas.width = rect.width || window.innerWidth;
+            H = canvas.height = rect.height || canvas.parentElement.offsetHeight;
+            seed();
+        }
+
+        window.addEventListener('resize', resize);
+        window.addEventListener('load', resize);
+        /* Fallback: also try after a short delay in case load already fired */
+        setTimeout(resize, 100);
+
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+            particles.forEach(function (p) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = p.color + p.alpha + ')';
+                ctx.fill();
+                p.x += p.dx; p.y += p.dy;
+                if (p.x < 0 || p.x > W) p.dx *= -1;
+                if (p.y < 0 || p.y > H) p.dy *= -1;
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+    /* =================================
+       COUNTER ANIMATION
+    ================================= */
+    (function () {
+        var counters = document.querySelectorAll('.counter');
+        if (!counters.length) return;
+
+        function animateCounter(el) {
+            var target = parseInt(el.getAttribute('data-target'), 10);
+            var suffix = el.getAttribute('data-suffix') || '';
+            var duration = 2200;
+            var start = null;
+            function step(ts) {
+                if (!start) start = ts;
+                var progress = Math.min((ts - start) / duration, 1);
+                var ease = 1 - Math.pow(1 - progress, 3);
+                var value = Math.round(ease * target);
+                if (target >= 1000) {
+                    el.textContent = (value >= 10000 ? '10k' : value.toLocaleString()) + suffix;
+                } else {
+                    el.textContent = value + suffix;
+                }
+                if (progress < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                    animateCounter(e.target);
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(function (c) { io.observe(c); });
+    })();
+
+    /* =================================
+       PROGRESS BAR ANIMATION
+    ================================= */
+    (function () {
+        var bars = document.querySelectorAll('.progress-animated');
+        if (!bars.length) return;
+
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                    e.target.style.width = e.target.getAttribute('data-width');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        bars.forEach(function (b) { io.observe(b); });
+    })();
+
+    /* =================================
+       NAVBAR SCROLL CLASS
+    ================================= */
+    (function () {
+        var nav = document.querySelector('.navbar');
+        if (!nav) return;
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 30) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        }, { passive: true });
+    })();
+</script>
 {% endblock %}

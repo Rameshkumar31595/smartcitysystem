@@ -16,10 +16,10 @@
 <!-- Quick Management Links -->
 <div class="row g-3 mb-4">
   <div class="col-md-4">
-    <div class="card">
+    <div class="card admin-quick-card">
       <div class="card-body text-center">
         <div class="mb-3">
-          <i class="bi bi-people" style="font-size: 2rem; color: #0d6efd;"></i>
+          <span class="admin-card-chip admin-chip-users" aria-hidden="true">Users</span>
         </div>
         <h5 class="card-title">Manage Users</h5>
         <p class="card-text text-muted small">Create, edit, or delete users and manage permissions</p>
@@ -28,10 +28,10 @@
     </div>
   </div>
   <div class="col-md-4">
-    <div class="card">
+    <div class="card admin-quick-card">
       <div class="card-body text-center">
         <div class="mb-3">
-          <i class="bi bi-exclamation-circle" style="font-size: 2rem; color: #fd7e14;"></i>
+          <span class="admin-card-chip admin-chip-issues" aria-hidden="true">Issues</span>
         </div>
         <h5 class="card-title">Manage Issues</h5>
         <p class="card-text text-muted small">Review and update issue status and details</p>
@@ -40,10 +40,10 @@
     </div>
   </div>
   <div class="col-md-4">
-    <div class="card">
+    <div class="card admin-quick-card">
       <div class="card-body text-center">
         <div class="mb-3">
-          <i class="bi bi-tools" style="font-size: 2rem; color: #198754;"></i>
+          <span class="admin-card-chip admin-chip-services" aria-hidden="true">Services</span>
         </div>
         <h5 class="card-title">Manage Services</h5>
         <p class="card-text text-muted small">Add, edit, or delete city services</p>
@@ -56,7 +56,7 @@
 <!-- KPI Tiles -->
 <div class="row g-3">
   <div class="col-md-3">
-    <div class="card kpi kpi-total">
+    <div class="card kpi kpi-total admin-kpi-card">
       <div class="card-body text-center">
         <div class="text-muted">Total Issues</div>
         <div class="value">{{ total_issues }}</div>
@@ -64,7 +64,7 @@
     </div>
   </div>
   <div class="col-md-3">
-    <div class="card kpi kpi-open">
+    <div class="card kpi kpi-open admin-kpi-card">
       <div class="card-body text-center">
         <div class="text-muted">Open</div>
         <div class="value">{{ open_issues }}</div>
@@ -72,7 +72,7 @@
     </div>
   </div>
   <div class="col-md-3">
-    <div class="card kpi kpi-progress">
+    <div class="card kpi kpi-progress admin-kpi-card">
       <div class="card-body text-center">
         <div class="text-muted">In Progress</div>
         <div class="value">{{ in_progress_issues }}</div>
@@ -80,7 +80,7 @@
     </div>
   </div>
   <div class="col-md-3">
-    <div class="card kpi kpi-resolved">
+    <div class="card kpi kpi-resolved admin-kpi-card">
       <div class="card-body text-center">
         <div class="text-muted">Resolved</div>
         <div class="value">{{ resolved_issues }}</div>
