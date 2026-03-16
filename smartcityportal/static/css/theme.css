@@ -1452,3 +1452,54 @@ i.bi,
 .sidebar-link.active::before {
     background: #1d4ed8;
 }
+
+/* =========================================
+   34. CTA COLOR TONE (Dark Navy)
+   ========================================= */
+:root {
+    --cta-navy-start: #1f3b63;
+    --cta-navy-end: #274b79;
+    --cta-navy-hover-start: #18324f;
+    --cta-navy-hover-end: #223f66;
+}
+
+.btn-navbar-primary,
+.btn-primary,
+.btn-gradient,
+.btn-primary-pill,
+.btn-cta-premium,
+.admin-main-content .btn-primary,
+.admin-main-content .btn-navbar-primary,
+.admin-main-content .btn-gradient,
+.admin-main-content .btn-primary-pill {
+    background: linear-gradient(135deg, var(--cta-navy-start), var(--cta-navy-end)) !important;
+    border-color: transparent !important;
+}
+
+.btn-navbar-primary:hover,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-gradient:hover,
+.btn-primary-pill:hover,
+.btn-cta-premium:hover,
+.admin-main-content .btn-primary:hover,
+.admin-main-content .btn-navbar-primary:hover,
+.admin-main-content .btn-gradient:hover,
+.admin-main-content .btn-primary-pill:hover {
+    background: linear-gradient(135deg, var(--cta-navy-hover-start), var(--cta-navy-hover-end)) !important;
+    box-shadow: 0 8px 22px rgba(31, 59, 99, 0.34) !important;
+}
+
+/* Keep filled button labels readable inside .card where global text color is enforced */
+.btn-navbar-primary,
+.btn-navbar-primary *,
+.btn-primary,
+.btn-primary *,
+.btn-gradient,
+.btn-gradient *,
+.btn-primary-pill,
+.btn-primary-pill *,
+.btn-cta-premium,
+.btn-cta-premium * {
+    color: #ffffff !important;
+}

@@ -3,38 +3,131 @@
 {% block title %}Home - Smart City Portal{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12 text-center mb-4">
-        <h2 class="mb-3">Welcome, <span class="user-chip">{{ user.username }}</span>!</h2>
-        <p class="lead">Smart City Portal Dashboard</p>
+<div class="page-header">
+    <div class="page-header-content">
+        <h1 class="page-title">User Overview</h1>
+        <p class="page-subtitle">Welcome, <span class="user-chip">{{ user.username }}</span> - track and manage your civic activity</p>
+    </div>
+    <div class="page-header-actions">
+        <a href="{% url 'issue_create' %}" class="btn btn-primary">Report New Issue</a>
+        <a href="{% url 'issue_list' %}" class="btn btn-secondary">View My Issues</a>
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card admin-quick-card">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <span class="admin-card-chip admin-chip-services" aria-hidden="true">Services</span>
+                </div>
+                <h5 class="card-title">Browse Services</h5>
+                <p class="card-text text-muted small">Explore city services and find the right department quickly</p>
+                <a href="{% url 'service_list' %}" class="btn btn-sm btn-primary">Open Services</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card admin-quick-card">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <span class="admin-card-chip admin-chip-issues" aria-hidden="true">Issues</span>
+                </div>
+                <h5 class="card-title">Report Issue</h5>
+                <p class="card-text text-muted small">Create a new complaint with location and details</p>
+                <a href="{% url 'issue_create' %}" class="btn btn-sm btn-primary">Create Issue</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card admin-quick-card">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <span class="admin-card-chip admin-chip-users" aria-hidden="true">Tracking</span>
+                </div>
+                <h5 class="card-title">My Issues</h5>
+                <p class="card-text text-muted small">Monitor status updates and progress on your reports</p>
+                <a href="{% url 'issue_list' %}" class="btn btn-sm btn-primary">Open Tracker</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="card kpi kpi-total admin-kpi-card">
+            <div class="card-body text-center">
+                <div class="text-muted">Total Reported</div>
+                <div class="value">{{ total_issues }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card kpi kpi-open admin-kpi-card">
+            <div class="card-body text-center">
+                <div class="text-muted">Open</div>
+                <div class="value">{{ open_issues }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card kpi kpi-progress admin-kpi-card">
+            <div class="card-body text-center">
+                <div class="text-muted">In Progress</div>
+                <div class="value">{{ in_progress_issues }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card kpi kpi-resolved admin-kpi-card">
+            <div class="card-body text-center">
+                <div class="text-muted">Resolved</div>
+                <div class="value">{{ resolved_issues }}</div>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="row mt-4">
-    <div class="col-md-6 mb-3">
-        <div class="card">
+    <div class="col-12">
+        <div class="card card-dark">
             <div class="card-body">
-                <h5 class="card-title">City Services</h5>
-                <p class="card-text">Browse available city services and information.</p>
-                <a href="{% url 'service_list' %}" class="btn btn-primary">View Services</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Report Issue</h5>
-                <p class="card-text">Report a civic issue in your area.</p>
-                <a href="{% url 'issue_create' %}" class="btn btn-primary">Report Issue</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 mb-3">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">My Issues</h5>
-                <p class="card-text">Track your reported issues and their status.</p>
-                <a href="{% url 'issue_list' %}" class="btn btn-primary">View My Issues</a>
+                <h5 class="card-title mb-3">Recent My Issues</h5>
+                <div class="table-responsive table-dark-wrap">
+                    <table class="table table-sm align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" class="text-end">Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for issue in recent_issues %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'issue_detail' issue.pk %}" class="text-decoration-none">{{ issue.title }}</a>
+                                </td>
+                                <td>{{ issue.category.name }}</td>
+                                <td>
+                                    <span class="badge
+                                        {% if issue.status == 'OPEN' %} badge-open
+                                        {% elif issue.status == 'IN_PROGRESS' %} badge-progress
+                                        {% elif issue.status == 'RESOLVED' %} badge-resolved
+                                        {% else %} badge-rejected
+                                        {% endif %}">{{ issue.get_status_display }}</span>
+                                </td>
+                                <td class="text-end text-muted">{{ issue.created_at|date:"M d, Y g:i A" }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-muted">You have not reported any issues yet.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

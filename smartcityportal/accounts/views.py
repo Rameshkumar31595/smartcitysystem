@@ -67,7 +67,17 @@ def login_redirect(request):
 def user_home(request):
     if is_admin(request.user):
         return redirect('admin_dashboard')
-    return render(request, 'dashboard/user_home.html')
+    user_issues = Issue.objects.filter(user=request.user)
+    recent_issues = user_issues.select_related('category').order_by('-created_at')[:10]
+
+    context = {
+        'total_issues': user_issues.count(),
+        'open_issues': user_issues.filter(status=Issue.Status.OPEN).count(),
+        'in_progress_issues': user_issues.filter(status=Issue.Status.IN_PROGRESS).count(),
+        'resolved_issues': user_issues.filter(status=Issue.Status.RESOLVED).count(),
+        'recent_issues': recent_issues,
+    }
+    return render(request, 'dashboard/user_home.html', context)
 
 @login_required
 @user_passes_test(is_admin)
