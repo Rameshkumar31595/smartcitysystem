@@ -6,7 +6,7 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 
 # Django setup
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smartcityportal.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'smartcityportal.smartcityportal.settings')
 
 import django
 django.setup()
