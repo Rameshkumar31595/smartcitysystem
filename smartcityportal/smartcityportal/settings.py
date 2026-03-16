@@ -157,6 +157,7 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+WHITENOISE_USE_FINDERS = True  # Enable WhiteNoise to use Django's file finders for STATICFILES_DIRS
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
