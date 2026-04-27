@@ -14,7 +14,7 @@
     <div class="col-lg-8">
         <div class="card">
             <div class="card-body">
-                <form method="post" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data" id="issue-create-form">
                     {% csrf_token %}
                     
                     <div class="mb-3">
@@ -67,4 +67,56 @@
         </div>
     </div>
 </div>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('issue-create-form');
+    if (!form) {
+        return;
+    }
+
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton ? submitButton.textContent : '';
+
+        try {
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+            }
+
+            const formData = new FormData(form);
+            const response = await fetch(form.action || window.location.href, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                credentials: 'same-origin'
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                alert(data.error || 'Unable to submit the issue.');
+                return;
+            }
+
+            window.location.href = data.redirect_url;
+        } catch (error) {
+            console.error('Issue submission failed:', error);
+            alert('Unable to submit the issue right now. Please try again.');
+        } finally {
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
 {% endblock %}

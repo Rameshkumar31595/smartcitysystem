@@ -21,7 +21,7 @@ class Issue(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     location = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="issue_images/", blank=True, null=True)
+    image = models.ImageField(upload_to="issues/", null=True, blank=True)
     status = models.CharField(max_length=15, choices=Status.choices, default=Status.OPEN)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

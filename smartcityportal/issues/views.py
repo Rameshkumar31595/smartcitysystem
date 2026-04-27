@@ -1,29 +1,57 @@
+import logging
+
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.db.models import Q
 from .models import Issue, IssueCategory
 from .forms import IssueForm, IssueCategoryForm
+
+logger = logging.getLogger(__name__)
 
 def is_admin(user):
     return user.is_staff or user.is_superuser or user.role == 'ADMIN'
 
 @login_required
 def issue_create(request):
-	if request.method == 'POST':
-		form = IssueForm(request.POST, request.FILES)
-		if form.is_valid():
-			issue = form.save(commit=False)
-			issue.user = request.user
-			issue.save()
-			messages.success(request, 'Issue reported successfully!')
-			return redirect('issue_detail', pk=issue.pk)
-	else:
-		form = IssueForm()
-	return render(request, 'issues/issue_create.html', {'form': form})
+    is_ajax_request = request.headers.get("x-requested-with") == "XMLHttpRequest"
+    if request.method == 'POST':
+        form = IssueForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                issue = form.save(commit=False)
+                issue.user = request.user
+                issue.save()
+            except Exception as exc:
+                logger.exception("Failed to create issue for user %s", request.user.pk)
+                if is_ajax_request:
+                    return JsonResponse(
+                        {"success": False, "error": "Unable to create issue right now.", "detail": str(exc)},
+                        status=500,
+                    )
+                messages.error(request, 'Unable to submit your issue right now. Please try again.')
+                return render(request, 'issues/issue_create.html', {'form': form}, status=500)
+
+            messages.success(request, 'Issue reported successfully!')
+            if is_ajax_request:
+                return JsonResponse(
+                    {
+                        "success": True,
+                        "redirect_url": reverse('issue_detail', kwargs={'pk': issue.pk}),
+                        "issue_id": issue.pk,
+                    },
+                )
+            return redirect('issue_detail', pk=issue.pk)
+
+        if is_ajax_request:
+            return JsonResponse({"success": False, "errors": form.errors}, status=400)
+    else:
+        form = IssueForm()
+    return render(request, 'issues/issue_create.html', {'form': form})
 
 @login_required
 def issue_list(request):

@@ -66,6 +66,9 @@
 ### ⏳ What Needs Configuration on Vercel:
 - DATABASE_URL environment variable
 - SECRET_KEY environment variable
+- CLOUDINARY_CLOUD_NAME environment variable
+- CLOUDINARY_API_KEY environment variable
+- CLOUDINARY_API_SECRET environment variable
 - Then: Deploy and verify
 
 ---
@@ -123,6 +126,9 @@
 DATABASE_URL = postgresql://user:password@host/database?sslmode=require
 SECRET_KEY = <your-generated-50-char-key>
 DEBUG = (leave empty, defaults to False)
+CLOUDINARY_CLOUD_NAME = <your-cloudinary-cloud-name>
+CLOUDINARY_API_KEY = <your-cloudinary-api-key>
+CLOUDINARY_API_SECRET = <your-cloudinary-api-secret>
 ```
 
 ### Step 2: Deploy
