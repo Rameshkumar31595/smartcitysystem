@@ -104,3 +104,6 @@ if not callable(app):
     raise RuntimeError(f"WSGI app is not callable: {type(app)}")
 
 logger.info("✓ Ready to handle Vercel requests")
+
+application = app
+handler = app
